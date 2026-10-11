@@ -1,7 +1,7 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
-  buildPicture, buildText, buildTitle, decorateAuthoredButton,
+  buildPicture, buildText, buildTitle, decorateAuthoredButton, wrapLooseText,
 } from '../../scripts/ferrer-utils.js';
 
 /* UE instrumentation: Pendiente (Fase 3) */
@@ -98,7 +98,7 @@ export default function decorate(block) {
   const contentText = el('div', 'cmp-teaser__content-text');
   content.append(contentText);
 
-  const nodes = textCell ? [...textCell.children] : [];
+  const nodes = textCell ? [...wrapLooseText(textCell).children] : [];
   if (textCell) moveInstrumentation(textCell, contentText);
   const textNodes = [];
   const buttons = [];

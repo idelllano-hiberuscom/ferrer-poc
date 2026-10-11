@@ -14,3 +14,5 @@ helix-importer-ui
 .eds-ai/*
 core-ferrer/*
 .claude/*
+import-work/*
+.eds-pipeline/*

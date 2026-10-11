@@ -1,4 +1,4 @@
-import { getLinkInfo } from '../../scripts/ferrer-utils.js';
+import { getLinkInfo, wrapLooseText } from '../../scripts/ferrer-utils.js';
 import { t } from '../../scripts/ferrer-i18n.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -90,7 +90,7 @@ function buildRow(row) {
   const description = el('p', 'cmp-table-info__description ferrer-body-small');
   let after = [];
   if (detailsCell) {
-    const parts = [...detailsCell.children];
+    const parts = [...wrapLooseText(detailsCell).children];
     if (parts.length > 1) {
       const badgeSource = parts.shift();
       moveInstrumentation(badgeSource, badge);

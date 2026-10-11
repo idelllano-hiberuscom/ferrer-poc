@@ -133,7 +133,8 @@ export function getLinkInfo(href) {
     isExternal: info.type === 'external',
     isDownload: info.type === 'download',
     isModal: info.type === 'modal',
-    isCurrentPage: sameOrigin && url.pathname === window.location.pathname,
+    // in-page anchors (#booth) point to a section, not to the current page
+    isCurrentPage: sameOrigin && !url.hash && url.pathname === window.location.pathname,
     url,
   };
 }
@@ -438,6 +439,147 @@ export function decorateAuthoredButton(linkOrContainer, {
   return wrap;
 }
 
+/** Elements that are not wrapped by wrapLooseText() (block level, media). */
+const NON_INLINE = /^(ADDRESS|BLOCKQUOTE|DIV|DL|FIGURE|H[1-6]|HR|IMG|OL|P|PICTURE|PRE|TABLE|UL)$/;
+/** Elements that can never live inside a <p>. */
+const BLOCK_LEVEL = /^(ADDRESS|BLOCKQUOTE|DIV|DL|FIGURE|H[1-6]|HR|OL|P|PRE|TABLE|UL)$/;
+
+/**
+ * Rich text of a single paragraph is delivered without its <p> (`<div>text</div>`, or
+ * `<div>text<p class="button-container">…</p></div>` when grouped with a link). Wraps each
+ * run of loose inline content (text nodes, <strong>, <a>, <br>…) holding text in a new <p>,
+ * so block code reading `cell.children` does not drop it. Block children are untouched.
+ * Also repairs the <p>-inside-<p> that aem.js wrapTextNodes() builds for such cells.
+ * @param {Element} cell
+ * @returns {Element} the cell
+ */
+export function wrapLooseText(cell) {
+  if (!cell) return cell;
+  // aem.js wrapTextNodes() wraps the WHOLE cell in a <p> when its first element is inline
+  // (`text<strong>…</strong><p>…</p>` -> <p> holding a <p>): undo it, attributes included
+  const only = cell.children.length === 1 ? cell.firstElementChild : null;
+  if (only && only.tagName === 'P'
+    && [...only.children].some((child) => BLOCK_LEVEL.test(child.tagName))) {
+    [...only.attributes].forEach(({ nodeName, nodeValue }) => {
+      if (nodeName === 'class' || nodeName.startsWith('data-aue') || nodeName.startsWith('data-richtext')) {
+        cell.setAttribute(nodeName, nodeValue);
+      }
+    });
+    only.before(...only.childNodes);
+    only.remove();
+  }
+  let run = [];
+  const flush = () => {
+    if (run.some((node) => node.textContent.trim())) {
+      const p = document.createElement('p');
+      run[0].before(p);
+      p.append(...run);
+    }
+    run = [];
+  };
+  [...cell.childNodes].forEach((node) => {
+    if (node.nodeType === Node.ELEMENT_NODE && NON_INLINE.test(node.tagName)) flush();
+    else if ([Node.TEXT_NODE, Node.ELEMENT_NODE].includes(node.nodeType)) run.push(node);
+  });
+  flush();
+  return cell;
+}
+
+/** Graffiti styles of the title RTE (styles-pulldown of content/title). */
+export const GRAFFITI_VARIANTS = Object.freeze(['gradient', 'blue', 'white']);
+
+/** `[[text]]` / `[[blue:text]]` authoring marker (plain-text title fields). */
+const GRAFFITI_MARKER = /\[\[(?:(gradient|blue|white):)?([^\]]+?)\]\]/g;
+
+/**
+ * Whether the page is rendered inside Universal Editor (author instrumentation present).
+ * @returns {boolean}
+ */
+function isEditorContext() {
+  return !!document.querySelector('[data-aue-resource]');
+}
+
+/**
+ * Creates a hidden authoring marker, kept only in Universal Editor so the inline text
+ * editor reads back the original `[[…]]` value (textContent) instead of losing it.
+ * @param {string} text
+ * @returns {HTMLSpanElement}
+ */
+function graffitiMarker(text) {
+  const marker = document.createElement('span');
+  marker.className = 'graffiti-marker';
+  marker.setAttribute('aria-hidden', 'true');
+  marker.textContent = text;
+  return marker;
+}
+
+/**
+ * Replaces the `[[…]]` markers of one text node with span.graffiti-{variant}.
+ * @param {Text} node
+ * @param {boolean} keepMarkers
+ */
+function graffitiFromMarkers(node, keepMarkers) {
+  const value = node.nodeValue;
+  const matches = [...value.matchAll(GRAFFITI_MARKER)];
+  if (!matches.length) return;
+  const parts = [];
+  let last = 0;
+  matches.forEach((match) => {
+    const [token, variant = 'gradient', text] = match;
+    if (match.index > last) parts.push(document.createTextNode(value.slice(last, match.index)));
+    const span = document.createElement('span');
+    span.className = `graffiti-${variant}`;
+    span.textContent = text;
+    if (keepMarkers) {
+      parts.push(graffitiMarker(token.slice(0, token.length - text.length - 2)), span, graffitiMarker(']]'));
+    } else {
+      parts.push(span);
+    }
+    last = match.index + token.length;
+  });
+  if (last < value.length) parts.push(document.createTextNode(value.slice(last)));
+  node.before(...parts);
+  node.remove();
+}
+
+/**
+ * Graffiti of the title component (TitleModel RTE styles graffiti-gradient|blue|white),
+ * authored in EDS with two conventions:
+ *   - plain-text fields: `FERRER BOOTH [[M.01]]` · `[[blue:M.01]]` · `[[white:M.01]]`
+ *   - rich-text headings: italic (<em>/<i>) = graffiti-gradient
+ * Output: <span class="graffiti-{variant}">…</span>, like the original markup.
+ * In Universal Editor the authored nodes are kept round-trippable: markers stay in hidden
+ * span.graffiti-marker and <em> keeps its node with the graffiti class.
+ * Idempotent: already decorated graffiti is left untouched.
+ * @param {Element} heading
+ * @returns {Element} the heading
+ */
+export function decorateGraffiti(heading) {
+  if (!heading) return heading;
+  const inEditor = isEditorContext();
+
+  heading.querySelectorAll('em, i').forEach((em) => {
+    if (GRAFFITI_VARIANTS.some((v) => em.classList.contains(`graffiti-${v}`))) return;
+    if (inEditor) {
+      em.classList.add('graffiti-gradient');
+      return;
+    }
+    const span = document.createElement('span');
+    span.className = 'graffiti-gradient';
+    em.before(span);
+    span.append(...em.childNodes);
+    em.remove();
+  });
+
+  const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (walker.nextNode()) {
+    if (walker.currentNode.nodeValue.includes('[[')) textNodes.push(walker.currentNode);
+  }
+  textNodes.forEach((node) => graffitiFromMarkers(node, inEditor));
+  return heading;
+}
+
 /**
  * Resolves the typography class of a title (TitleModel.getFont()).
  *   'special-1' (default, Boldine) -> ferrer-h2-special-1
@@ -467,6 +609,7 @@ export function getTitleFontClass(level, font = 'special-1') {
  * @param {Element} [options.element] existing heading (or any element whose children are moved)
  * @param {string} [options.text] plain text content
  * @param {string} [options.html] rich content (TitleModel allows inline markup / graffiti spans)
+ *   Graffiti markers (`[[…]]`, <em>) are converted with decorateGraffiti().
  * @param {number} [options.level=2] heading level for new headings (h1-h6)
  * @param {string} [options.font='special-1'] see getTitleFontClass()
  * @param {string} [options.link] wraps the content in <a class="cmp-title__link">
@@ -498,6 +641,7 @@ export function buildTitle({
     } else if (html) heading.innerHTML = html;
     else heading.textContent = text;
   }
+  decorateGraffiti(heading);
   const headingLevel = Number(heading.tagName.substring(1));
   heading.classList.add(getTitleFontClass(headingLevel, font), ...toClassList(classes));
   if (id) heading.id = id;

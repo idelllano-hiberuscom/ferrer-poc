@@ -23,6 +23,13 @@
           "label": "Keywords"
         },
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "robots",
+          "label": "Robots",
+          "description": "Content of <meta name=\"robots\">, e.g. noindex, nofollow"
+        },
+        {
           "component": "select",
           "name": "theme",
           "label": "Theme",

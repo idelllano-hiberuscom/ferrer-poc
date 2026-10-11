@@ -26,6 +26,13 @@
           "description": "The label shown for this section in the Content Tree"
         },
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "anchor",
+          "label": "Anchor ID",
+          "description": "Section id for in-page links (e.g. booth -> #booth). Lowercase letters, numbers and hyphens"
+        },
+        {
           "component": "multiselect",
           "name": "style",
           "label": "Style",

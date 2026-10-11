@@ -57,7 +57,8 @@
             { "name": "Theme red", "value": "template-theme--red" },
             { "name": "Theme blue", "value": "template-theme--blue" },
             { "name": "Theme purple", "value": "template-theme--purple" },
-            { "name": "Theme green", "value": "template-theme--green" }
+            { "name": "Theme green", "value": "template-theme--green" },
+            { "name": "Title font: DM Sans", "value": "title-dm-sans" }
           ]
         },
         {

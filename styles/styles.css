@@ -681,29 +681,32 @@ footer .footer[data-block-status='loaded'] {
 
 /* ===== TITLE component (title.scss) + section title styles ===== */
 .cmp-title--left .cmp-title,
-.section.title-left :is(.cmp-title, .default-content-wrapper > :is(h1, h2, h3, h4, h5, h6)) {
+.section.title-left .default-content-wrapper > :is(h1, h2, h3, h4, h5, h6) {
     text-align: left;
 }
 
 .cmp-title--right .cmp-title,
-.section.title-right :is(.cmp-title, .default-content-wrapper > :is(h1, h2, h3, h4, h5, h6)) {
+.section.title-right .default-content-wrapper > :is(h1, h2, h3, h4, h5, h6) {
     text-align: right;
 }
 
 .cmp-title--center .cmp-title,
-.section.title-center :is(.cmp-title, .default-content-wrapper > :is(h1, h2, h3, h4, h5, h6)) {
+.section.title-center .default-content-wrapper > :is(h1, h2, h3, h4, h5, h6) {
     text-align: center;
     margin: auto;
 }
 
 .cmp-title--white .cmp-title,
-.section.title-white :is(.cmp-title, .default-content-wrapper > :is(h1, h2, h3, h4, h5, h6)) {
+.section.title-white .default-content-wrapper > :is(h1, h2, h3, h4, h5, h6) {
     color: var(--text-inverse);
 }
 
 :is(.cmp-title, h1, h2, h3, h4, h5, h6) :is(.graffiti-gradient, .graffiti-blue, .graffiti-white) {
     font-weight: 400;
     font-family: var(--font-special-2);
+
+    /* <em> authored in rich-text headings is kept as the graffiti node inside Universal Editor */
+    font-style: normal;
 }
 
 :is(.cmp-title, h1, h2, h3, h4, h5, h6) .graffiti-gradient {
@@ -718,6 +721,10 @@ footer .footer[data-block-status='loaded'] {
 
 :is(.cmp-title, h1, h2, h3, h4, h5, h6) .graffiti-white {
     color: var(--neutral-0);
+}
+
+:is(.cmp-title, h1, h2, h3, h4, h5, h6) .graffiti-marker {
+    display: none;
 }
 
 /* ===== TEXT component (text.scss) — also applied to default content ===== */

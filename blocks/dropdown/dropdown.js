@@ -1,4 +1,4 @@
-import { buildText } from '../../scripts/ferrer-utils.js';
+import { buildText, wrapLooseText } from '../../scripts/ferrer-utils.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { buildDownloadDocuments } from '../download-documents/download-documents.js';
 
@@ -62,7 +62,7 @@ function readDocumentGroups(cell) {
       });
     });
   };
-  [...cell.children].forEach((node) => {
+  [...wrapLooseText(cell).children].forEach((node) => {
     if (/^H[1-6]$/.test(node.tagName)) {
       current = { title: node.textContent.trim(), titleNode: node, documents: [] };
       groups.push(current);
