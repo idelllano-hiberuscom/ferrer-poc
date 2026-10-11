@@ -1,0 +1,127 @@
+{
+  "definitions": [
+    {
+      "title": "Form Index",
+      "id": "form-index",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Form Index",
+              "model": "form-index",
+              "filter": "form-index"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Index Entry (group title)",
+      "id": "form-index-entry",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Form Index Entry",
+              "model": "form-index-entry"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Form Index Link",
+      "id": "form-index-link",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Form Index Link",
+              "model": "form-index-link"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "form-index",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Image alt text"
+        }
+      ]
+    },
+    {
+      "id": "form-index-entry",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "form-index-link",
+      "fields": [
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "link",
+          "label": "Link",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "linkText",
+          "label": "Text",
+          "required": true
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "target",
+          "label": "Target",
+          "value": "_self",
+          "options": [
+            {
+              "name": "Same tab",
+              "value": "_self"
+            },
+            {
+              "name": "Open in new tab",
+              "value": "_blank"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "form-index",
+      "components": [
+        "form-index-entry",
+        "form-index-link"
+      ]
+    }
+  ]
+}

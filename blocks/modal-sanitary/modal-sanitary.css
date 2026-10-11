@@ -1,0 +1,57 @@
+.modal-sanitary-container {
+    .modal-sanitary {
+        .cmp-modal-sanitary {
+            &[aria-hidden='true'] {
+                display: none;
+            }
+
+            /* ── preview inside its own fragment page ── */
+            &.in-xf {
+                position: static;
+                background-color: transparent;
+                padding: 0;
+                display: block;
+            }
+
+            .cmp-modal-sanitary__dialog {
+                position: relative;
+                z-index: 1;
+                background-color: var(--neutral-0);
+                border: 0.0625rem solid var(--neutral-0);
+                border-radius: var(--radius-card-regular);
+                padding: var(--space-10);
+                width: 20.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-10);
+                box-shadow: var(--shadow-1);
+                margin: auto;
+
+                @media (width >= 1024px) {
+                    width: 43.1875rem;
+                }
+
+                .cmp-modal-sanitary__dialog-title,
+                .cmp-modal-sanitary__dialog-text {
+                    text-align: center;
+                    color: var(--text-primary);
+                    margin: 0;
+                }
+
+                .cmp-modal-sanitary__dialog-buttons {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: center;
+                    gap: var(--padding-xlarge);
+
+                    .cmp-button {
+                        @media (width >= 1024px) {
+                            min-width: 7.5rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

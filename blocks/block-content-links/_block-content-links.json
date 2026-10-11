@@ -1,0 +1,180 @@
+{
+  "definitions": [
+    {
+      "title": "Block Content Links",
+      "id": "block-content-links",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Block Content Links",
+              "model": "block-content-links",
+              "filter": "block-content-links"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Block Content Links Card",
+      "id": "block-content-links-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Block Content Links Card",
+              "model": "block-content-links-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "block-content-links",
+      "fields": [
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Options",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Reverse alignment (image on the left)",
+              "value": "reverse-align"
+            },
+            {
+              "name": "Grey background",
+              "value": "block-content-links--grey"
+            },
+            {
+              "name": "Theme default",
+              "value": "template-theme--default"
+            },
+            {
+              "name": "Theme green",
+              "value": "template-theme--green"
+            },
+            {
+              "name": "Theme red",
+              "value": "template-theme--red"
+            },
+            {
+              "name": "Theme purple",
+              "value": "template-theme--purple"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "content_title",
+          "label": "Title",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "content_titleType",
+          "label": "Title heading level",
+          "valueType": "string",
+          "value": "h2",
+          "options": [
+            {
+              "name": "H2",
+              "value": "h2"
+            },
+            {
+              "name": "H3",
+              "value": "h3"
+            },
+            {
+              "name": "H4",
+              "value": "h4"
+            }
+          ]
+        },
+        {
+          "component": "richtext",
+          "name": "content_text",
+          "label": "Text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "cta",
+          "label": "Button link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "ctaText",
+          "label": "Button text",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "ctaType",
+          "label": "Button type",
+          "valueType": "string",
+          "value": "primary",
+          "options": [
+            {
+              "name": "Primary",
+              "value": "primary"
+            },
+            {
+              "name": "Secondary",
+              "value": "secondary"
+            }
+          ]
+        },
+        {
+          "component": "reference",
+          "name": "image",
+          "label": "Image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "imageAlt",
+          "label": "Image alt text",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "block-content-links-item",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "text",
+          "label": "Text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "block-content-links",
+      "components": [
+        "block-content-links-item"
+      ]
+    }
+  ]
+}

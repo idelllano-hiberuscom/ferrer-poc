@@ -1,0 +1,36 @@
+{
+  "definitions": [
+    {
+      "title": "Block Two Column",
+      "id": "block-two-column",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/columns/v1/columns",
+            "template": {
+              "name": "Block Two Column",
+              "model": "block-two-column",
+              "filter": "block-two-column",
+              "columns": "2",
+              "rows": "1"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "block-two-column",
+      "fields": []
+    }
+  ],
+  "filters": [
+    {
+      "id": "block-two-column",
+      "components": [
+        "column"
+      ]
+    }
+  ]
+}

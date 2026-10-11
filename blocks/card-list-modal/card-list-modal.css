@@ -1,0 +1,30 @@
+.card-list-modal-container {
+    .card-list-modal {
+        .cmp-card-list-modal {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20.5rem, 1fr));
+            gap: var(--padding-medium);
+
+            @media (width >= 1024px) {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        .cmp-card-list-modal__item {
+            display: flex;
+
+            .card-managers {
+                width: 100%;
+            }
+        }
+
+        .cmp-modal--card-list .cmp-modal__content .cmp-image {
+            height: 21.688rem;
+
+            @media (width >= 601px) {
+                aspect-ratio: 4 / 3;
+                height: auto;
+            }
+        }
+    }
+}

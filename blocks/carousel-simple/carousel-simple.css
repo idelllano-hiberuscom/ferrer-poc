@@ -1,0 +1,72 @@
+.carousel-simple-container .carousel-simple-wrapper {
+    /* full width: the block brings its own .content-container */
+    max-width: none;
+    padding: 0;
+
+    .carousel-simple {
+        .cmp-carousel {
+            .cmp-carousel__content {
+                position: relative;
+
+                img {
+                    width: auto;
+                    max-width: 100%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    display: block;
+                    margin-bottom: 0.625rem;
+                }
+
+                /* Core Carousel v1 base (clientlib core.wcm.components.carousel.v1) */
+                .cmp-carousel__item {
+                    display: none;
+
+                    &.cmp-carousel__item--active {
+                        display: block;
+                    }
+                }
+            }
+
+            .cmp-controls {
+                position: absolute;
+                justify-content: flex-end;
+                bottom: -2.175rem;
+                width: 100%;
+
+                .cmp-carousel__action-text {
+                    display: none;
+                }
+
+                .cmp-controls__navigation {
+                    font-size: 1.3rem;
+                }
+
+                .is-disabled {
+                    display: none;
+                }
+            }
+
+            .cmp-carousel__indicators {
+                display: flex;
+                flex-wrap: wrap;
+                list-style: none;
+                padding: 0;
+                justify-content: flex-start;
+                position: relative;
+                z-index: 10;
+                width: 80%;
+                top: 1.7rem;
+
+                .cmp-carousel__indicator {
+                    margin: 0 0.1875rem;
+                    font-size: 0;
+                    cursor: pointer;
+
+                    &.cmp-carousel__indicator--active {
+                        background-color: var(--default-primary-700);
+                    }
+                }
+            }
+        }
+    }
+}

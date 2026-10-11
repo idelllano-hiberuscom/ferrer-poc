@@ -21,25 +21,106 @@
       "id": "hero",
       "fields": [
         {
+          "component": "select",
+          "name": "classes",
+          "label": "View",
+          "valueType": "string",
+          "value": "",
+          "options": [
+            {
+              "name": "Section",
+              "value": ""
+            },
+            {
+              "name": "Home",
+              "value": "view-home"
+            }
+          ]
+        },
+        {
+          "component": "boolean",
+          "name": "classes_autoplay",
+          "label": "Video autoplay (Home view)",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "select",
+          "name": "classes_theme",
+          "label": "Theme",
+          "valueType": "string",
+          "value": "",
+          "options": [
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "Red",
+              "value": "template-theme--red"
+            },
+            {
+              "name": "White",
+              "value": "template-theme--white"
+            },
+            {
+              "name": "Green",
+              "value": "template-theme--green"
+            },
+            {
+              "name": "Purple",
+              "value": "template-theme--purple"
+            }
+          ]
+        },
+        {
           "component": "reference",
           "valueType": "string",
-          "name": "image",
-          "label": "Image",
+          "name": "media_image",
+          "label": "Image (desktop)",
+          "description": "Required. Cover image (first image of the group). In Home view with a video it is shown until the video plays.",
           "multi": false
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "imageAlt",
-          "label": "Alt",
-          "value": ""
+          "name": "media_imageAlt",
+          "label": "Image alt text"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "media_imageTablet",
+          "label": "Image (tablet crop, optional)",
+          "multi": false,
+          "description": "Second image of the media group: always set the desktop image first."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "media_video",
+          "label": "Vimeo video URL (Home view)",
+          "description": "e.g. https://vimeo.com/123456789. Leave empty for an image background."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "media_videoMobile",
+          "label": "Vimeo video URL for mobile (max-width 1024px)"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "imageMobile",
+          "label": "Image (mobile crop, optional)",
+          "multi": false
         },
         {
           "component": "richtext",
+          "valueType": "string",
           "name": "text",
-          "value": "",
-          "label": "Text",
-          "valueType": "string"
+          "label": "Content",
+          "description": "Section view: optional subheading paragraph, heading, text and one bold/italic link as button. Home view: heading only."
         }
       ]
     }

@@ -1,0 +1,59 @@
+{
+  "definitions": [
+    {
+      "title": "Header Section",
+      "id": "header-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "model": "header-section"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header-section",
+      "fields": [
+        {
+          "component": "text",
+          "name": "name",
+          "label": "Section Name",
+          "description": "The label shown for this section in the Content Tree"
+        },
+        {
+          "component": "multiselect",
+          "name": "style",
+          "label": "Header part",
+          "description": "Which part of the header this section feeds. Add 'Simple header' to any section to render the header-simple variant.",
+          "options": [
+            { "name": "Banner", "value": "header-banner" },
+            { "name": "Top bar - left links (max. 3)", "value": "header-top-left" },
+            { "name": "Top bar - central link", "value": "header-top-center" },
+            { "name": "Top bar - right links (max. 3)", "value": "header-top-right" },
+            { "name": "Language navigation", "value": "header-languages" },
+            { "name": "Logo and home link", "value": "header-logo" },
+            { "name": "Highlighted links", "value": "header-highlighted" },
+            { "name": "Navigation entry (level 0)", "value": "header-nav-item" },
+            { "name": "Simple header (variant)", "value": "header-simple" }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "header-section",
+      "components": [
+        "text",
+        "title",
+        "image",
+        "button"
+      ]
+    }
+  ]
+}

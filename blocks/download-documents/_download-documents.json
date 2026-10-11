@@ -1,0 +1,133 @@
+{
+  "definitions": [
+    {
+      "title": "Download Documents",
+      "id": "download-documents",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Download Documents",
+              "model": "download-documents",
+              "filter": "download-documents",
+              "classes": "large"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Document",
+      "id": "download-documents-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Document",
+              "model": "download-documents-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "download-documents",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes",
+          "label": "View",
+          "value": "large",
+          "options": [
+            { "name": "Large", "value": "large" },
+            { "name": "Small", "value": "small" },
+            { "name": "With description", "value": "with-description" },
+            { "name": "With image", "value": "with-image" }
+          ]
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes_theme",
+          "label": "Style (small view)",
+          "value": "",
+          "options": [
+            { "name": "Default", "value": "" },
+            { "name": "Dark", "value": "download-documents--dark" }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title (small view)"
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "downloadAll",
+          "label": "Download all: ZIP file from DAM (with image view, optional)",
+          "description": "If empty, the 'Download all' button is hidden"
+        }
+      ]
+    },
+    {
+      "id": "download-documents-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "link",
+          "label": "Document path",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "linkText",
+          "label": "Text",
+          "required": true
+        },
+        {
+          "component": "textarea",
+          "valueType": "string",
+          "name": "description",
+          "label": "Description (with description view)"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image (with image view)",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Image alt text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "size",
+          "label": "File size (e.g. 1.2 MB, optional)",
+          "description": "Shown as '(EXT, size)' in the small view. The extension is taken from the URL"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "download-documents",
+      "components": [
+        "download-documents-item"
+      ]
+    }
+  ]
+}

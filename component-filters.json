@@ -2,7 +2,8 @@
   {
     "id": "main",
     "components": [
-      "section"
+      "section",
+      "header-section"
     ]
   },
   {
@@ -13,15 +14,97 @@
       "button",
       "title",
       "hero",
+      "teaser",
+      "breadcrumb",
+      "embed",
+      "modal-sanitary",
+      "carousel-base",
+      "carousel-simple",
+      "block-numbers",
+      "block-content-links",
+      "card-list",
+      "card-carousel-modal",
+      "card-ceo",
+      "card-list-modal",
+      "links-list",
+      "links-image",
+      "links-menu",
+      "form-index",
+      "info-list",
+      "catalog-apis",
+      "site-distributor",
+      "block-content",
+      "block-two-column",
+      "content-sidebar",
+      "content-tabs",
+      "dropdown",
+      "download-documents",
+      "divider",
+      "table-info",
+      "table-progress",
+      "fragment",
       "cards",
-      "columns",
-      "fragment"
+      "columns"
+    ]
+  },
+  {
+    "id": "block-content-links",
+    "components": [
+      "block-content-links-item"
+    ]
+  },
+  {
+    "id": "block-numbers",
+    "components": [
+      "block-numbers-item"
+    ]
+  },
+  {
+    "id": "block-two-column",
+    "components": [
+      "column"
+    ]
+  },
+  {
+    "id": "card-carousel-modal",
+    "components": [
+      "card-carousel-modal-item"
+    ]
+  },
+  {
+    "id": "card-list-modal",
+    "components": [
+      "card-list-modal-item"
+    ]
+  },
+  {
+    "id": "card-list",
+    "components": [
+      "card-list-item"
     ]
   },
   {
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "carousel-base",
+    "components": [
+      "carousel-base-item"
+    ]
+  },
+  {
+    "id": "carousel-simple",
+    "components": [
+      "carousel-simple-item"
+    ]
+  },
+  {
+    "id": "catalog-apis",
+    "components": [
+      "catalog-api"
     ]
   },
   {
@@ -37,6 +120,88 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "content-sidebar",
+    "components": [
+      "content-sidebar-item"
+    ]
+  },
+  {
+    "id": "content-tabs",
+    "components": [
+      "content-tabs-item"
+    ]
+  },
+  {
+    "id": "download-documents",
+    "components": [
+      "download-documents-item"
+    ]
+  },
+  {
+    "id": "dropdown",
+    "components": [
+      "dropdown-item"
+    ]
+  },
+  {
+    "id": "form-index",
+    "components": [
+      "form-index-entry",
+      "form-index-link"
+    ]
+  },
+  {
+    "id": "header-section",
+    "components": [
+      "text",
+      "title",
+      "image",
+      "button"
+    ]
+  },
+  {
+    "id": "info-list",
+    "components": [
+      "info-list-item"
+    ]
+  },
+  {
+    "id": "links-image",
+    "components": [
+      "links-image-card"
+    ]
+  },
+  {
+    "id": "links-list",
+    "components": [
+      "links-list-item"
+    ]
+  },
+  {
+    "id": "links-menu",
+    "components": [
+      "links-menu-item"
+    ]
+  },
+  {
+    "id": "site-distributor",
+    "components": [
+      "site-distributor-language"
+    ]
+  },
+  {
+    "id": "table-info",
+    "components": [
+      "table-info-item"
+    ]
+  },
+  {
+    "id": "table-progress",
+    "components": [
+      "table-progress-item"
     ]
   }
 ]

@@ -1,0 +1,139 @@
+{
+  "definitions": [
+    {
+      "title": "Links List",
+      "id": "links-list",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Links List",
+              "model": "links-list",
+              "filter": "links-list",
+              "classes": "cmp-links-list--default"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Links List Item",
+      "id": "links-list-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Links List Item",
+              "model": "links-list-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "links-list",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes",
+          "label": "View",
+          "value": "cmp-links-list--default",
+          "options": [
+            {
+              "name": "Default",
+              "value": "cmp-links-list--default"
+            },
+            {
+              "name": "With card",
+              "value": "cmp-links-list--with-card"
+            },
+            {
+              "name": "Card XL",
+              "value": "cmp-links-list--card-xl"
+            },
+            {
+              "name": "XS",
+              "value": "cmp-links-list--xs"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes_columns",
+          "label": "Columns (only 'With card' and 'Card XL')",
+          "value": "grid-template-columns-3",
+          "options": [
+            {
+              "name": "2",
+              "value": "grid-template-columns-2"
+            },
+            {
+              "name": "3",
+              "value": "grid-template-columns-3"
+            },
+            {
+              "name": "4",
+              "value": "grid-template-columns-4"
+            }
+          ]
+        },
+        {
+          "component": "multiselect",
+          "valueType": "string",
+          "name": "classes_theme",
+          "label": "Style",
+          "options": [
+            {
+              "name": "Dark",
+              "value": "links-list--dark"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "links-list-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "link",
+          "label": "Link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "linkText",
+          "label": "Link text (only 'Card XL')"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title",
+          "required": true
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "description",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "links-list",
+      "components": [
+        "links-list-item"
+      ]
+    }
+  ]
+}

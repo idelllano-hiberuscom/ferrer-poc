@@ -1,0 +1,28 @@
+.links-menu-container {
+    .links-menu {
+        .cmp-links-menu__list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cmp-links-menu__list-item {
+            padding: 0 var(--padding-medium);
+
+            &:not(:last-child) {
+                border-right: var(--border-xsmall) solid var(--neutral-500);
+            }
+        }
+
+        /* ── dark ── */
+        &.links-menu--dark {
+            .cmp-links-menu__list-item:not(:last-child) {
+                border-right-color: var(--neutral-0);
+            }
+
+            .cmp-button--ghost:not(.cmp-button--dark) .cmp-button .cmp-button__text {
+                color: var(--neutral-0);
+            }
+        }
+    }
+}

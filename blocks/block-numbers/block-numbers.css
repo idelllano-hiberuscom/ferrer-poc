@@ -1,0 +1,138 @@
+.block-numbers-container {
+    .block-numbers {
+        .block-numbers__wrapper {
+            .block-numbers__list {
+                display: flex;
+                align-items: flex-start;
+                width: max-content;
+                max-width: none;
+
+                .block-numbers__item {
+                    width: 19rem;
+
+                    .block-numbers__content {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: var(--padding-xlarge);
+                        width: 100%;
+
+                        .block-numbers__text {
+                            text-align: center;
+
+                            /* ── text-white ── */
+                            &:is(.text-white *) {
+                                color: var(--neutral-0);
+                            }
+
+                            /* ── text-black ── */
+                            &:is(.text-black *) {
+                                color: var(--neutral-1000);
+                            }
+
+                            /* ── text-special ── */
+                            &:is(.text-special *) {
+                                font-family: var(--font-special-1);
+                                font-size: 2rem;
+                                line-height: 90%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* ── column ── */
+            &.block-numbers__wrapper--column {
+                display: flex;
+                justify-content: center;
+
+                @media (width >= 601px) {
+                    justify-content: unset;
+                }
+
+                .block-numbers__list {
+                    flex-direction: column;
+                    padding-bottom: 0;
+                    align-items: center;
+                    gap: var(--padding-medium);
+
+                    @media (width >= 601px) {
+                        flex-direction: row;
+                        align-items: unset;
+                        gap: 0;
+                    }
+                }
+
+                .cmp-controls {
+                    display: none;
+
+                    @media (width >= 601px) {
+                        display: flex;
+                    }
+                }
+            }
+
+            /* ── three-items ── */
+            &.block-numbers__wrapper--three-items {
+                .block-numbers__list {
+                    .block-numbers__item {
+                        max-width: 25.75rem;
+                        width: 100%;
+                        flex: 0 0 auto;
+                    }
+                }
+            }
+
+            /* ── two-items ── */
+            &.block-numbers__wrapper--two-items {
+                .block-numbers__list {
+                    width: 100%;
+                    justify-content: center;
+                    gap: var(--padding-medium);
+
+                    @media (width >= 601px) {
+                        gap: var(--padding-xlarge);
+                    }
+
+                    .block-numbers__item {
+                        max-width: 25.75rem;
+                        width: 100%;
+                    }
+                }
+            }
+
+            &.swiper {
+                display: flex;
+            }
+
+            /* scroll-snap carousel: the list is the scroller, max-content would stop it scrolling */
+            &.swiper-initialized .block-numbers__list {
+                width: auto;
+            }
+        }
+
+        .block-numbers__title {
+            color: var(--color-template-600);
+        }
+
+        .block-numbers__button-container {
+            display: flex;
+            justify-content: center;
+
+            a {
+                margin-top: var(--divider-space-mobile);
+
+                @media (width >= 601px) {
+                    margin-top: var(--divider-space-small);
+                }
+            }
+        }
+
+        /* ── dark ── */
+        &.block-numbers--dark {
+            .block-numbers__title {
+                color: var(--color-template-400);
+            }
+        }
+    }
+}

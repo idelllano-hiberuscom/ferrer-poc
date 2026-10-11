@@ -31,10 +31,97 @@
           "label": "Style",
           "options": [
             {
-              "name": "Highlight",
-              "value": "highlight"
+              "name": "Background: white",
+              "value": "container-white"
+            },
+            {
+              "name": "Background: gray",
+              "value": "container-gray"
+            },
+            {
+              "name": "Background: black",
+              "value": "container-black"
+            },
+            {
+              "name": "Background: green gradient",
+              "value": "container-green-gradient"
+            },
+            {
+              "name": "Background: blue gradient",
+              "value": "container-blue-gradient"
+            },
+            {
+              "name": "Background image overlay: low opacity",
+              "value": "container-opacity-low"
+            },
+            {
+              "name": "Carousel controls: white",
+              "value": "container-carrousel-controls-white"
+            },
+            {
+              "name": "Padding: 96",
+              "value": "container-padding-96"
+            },
+            {
+              "name": "Padding: 120",
+              "value": "container-padding-120"
+            },
+            {
+              "name": "Padding: none",
+              "value": "container-no-padding"
+            },
+            {
+              "name": "Width: editorial (846px)",
+              "value": "content-editorial"
+            },
+            {
+              "name": "Text width: 70% (desktop)",
+              "value": "text-width-70"
+            },
+            {
+              "name": "Text width: 50% (desktop)",
+              "value": "text-width-50"
+            },
+            {
+              "name": "Text: centered",
+              "value": "ferrer-center"
+            },
+            {
+              "name": "Titles: DM Sans",
+              "value": "title-dm-sans"
+            },
+            {
+              "name": "Titles: left",
+              "value": "title-left"
+            },
+            {
+              "name": "Titles: centered",
+              "value": "title-center"
+            },
+            {
+              "name": "Titles: right",
+              "value": "title-right"
+            },
+            {
+              "name": "Titles: white",
+              "value": "title-white"
             }
           ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "background-desktop",
+          "label": "Background image (desktop)",
+          "multi": false
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "background-mobile",
+          "label": "Background image (mobile)",
+          "description": "Falls back to the desktop image",
+          "multi": false
         }
       ]
     }
@@ -48,9 +135,37 @@
         "button",
         "title",
         "hero",
+        "teaser",
+        "breadcrumb",
+        "embed",
+        "modal-sanitary",
+        "carousel-base",
+        "carousel-simple",
+        "block-numbers",
+        "block-content-links",
+        "card-list",
+        "card-carousel-modal",
+        "card-ceo",
+        "card-list-modal",
+        "links-list",
+        "links-image",
+        "links-menu",
+        "form-index",
+        "info-list",
+        "catalog-apis",
+        "site-distributor",
+        "block-content",
+        "block-two-column",
+        "content-sidebar",
+        "content-tabs",
+        "dropdown",
+        "download-documents",
+        "divider",
+        "table-info",
+        "table-progress",
+        "fragment",
         "cards",
-        "columns",
-        "fragment"
+        "columns"
       ]
     }
   ]

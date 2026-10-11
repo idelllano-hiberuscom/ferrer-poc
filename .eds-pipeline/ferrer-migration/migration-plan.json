@@ -1,0 +1,838 @@
+{
+  "generated": "2026-10-09T12:24:52.751Z",
+  "pathBases": {
+    "APPS": "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components",
+    "FE": "core-ferrer/ui.frontend/src/main/webpack",
+    "JAVA": "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models",
+    "i18n": "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/i18n/vocabulary"
+  },
+  "lots": {
+    "L0-global": {
+      "order": "PRIMERO: scripts/ferrer-*.js + tokens/tipografía/botones/grid antes de que arranquen L1-L5",
+      "ownsSharedFiles": [
+        "styles/styles.css",
+        "styles/lazy-styles.css",
+        "styles/fonts.css",
+        "fonts/*",
+        "scripts/scripts.js",
+        "scripts/delayed.js",
+        "scripts/ferrer-utils.js",
+        "scripts/ferrer-carousel.js",
+        "scripts/ferrer-modal.js",
+        "head.html",
+        "models/_section.json (solo campos/estilos, NO el filtro)",
+        "models/_button.json",
+        "models/_title.json",
+        "models/_text.json",
+        "models/_image.json",
+        "models/_page.json",
+        ".eslintignore",
+        ".hlxignore"
+      ],
+      "sources": [
+        "core-ferrer/ui.frontend/src/main/webpack/site/variables.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/_breakpoints.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/_variables-grid.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/_fonts.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/_icons.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/_theme.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/reset.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/base.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/text.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/grid.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/button.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/scrollbar.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/carousel-controls.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/cards/card_basic.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/cards/card_managers.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/site/pdf-download-analytics.js",
+        "core-ferrer/ui.frontend/src/main/webpack/site/main.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/resources/fonts",
+        "core-ferrer/ui.frontend/src/main/webpack/resources/icons",
+        "core-ferrer/ui.frontend/src/main/webpack/components/modal/modal.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/components/modal/modal.js",
+        "core-ferrer/ui.frontend/src/main/webpack/components/container/container.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/components/container/container.js",
+        "core-ferrer/ui.frontend/src/main/webpack/components/text/text.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/components/title/title.scss",
+        "core-ferrer/ui.frontend/src/main/webpack/components/image/image.scss",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/_shared/templates/images/images-templates.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/_shared/templates/modal/modal.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/_shared/templates/carousel-control-panel/controls.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/_shared/dialogs/image/.content.xml",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/_shared/dialogs/image-with-mobile/.content.xml",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/_shared/dialogs/video/.content.xml",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/_shared/dialogs/modal/.content.xml",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/_shared/dialogs/rich-text/.content.xml",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/button/button.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/button/icon.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/title/title.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/title/_cq_dialog/.content.xml",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/text/text.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/image/image.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/image/_cq_dialog/.content.xml",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/container/responsiveGrid.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/container/simple.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/container/_cq_dialog/.content.xml",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/page/head.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/page/head.analytics.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/page/customheaderlibs.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/page/page.html",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/page/_cq_dialog/.content.xml",
+        "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/helpers/LinkHelperModel.java",
+        "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/commons/ImageCropsModel.java",
+        "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/helpers/ModalHelper.java",
+        "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/commons/ModalModel.java",
+        "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/title/TitleModel.java",
+        "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/container/ContainerModel.java",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/i18n/vocabulary/en.json",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/i18n/vocabulary/es.json",
+        "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/i18n/vocabulary/ca.json"
+      ]
+    },
+    "L1-header": {
+      "order": "paralelo tras L0",
+      "components": [
+        {
+          "aem": "structure/header",
+          "block": "header",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/header/header.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/header/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/header/header.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/header/header.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/components/navigation/navigation.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/navigation/navigation.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/header/HeaderModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/language_navigation/LanguageNavigationModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/language_navigation/NavigationItemWrapper.java"
+          ]
+        },
+        {
+          "aem": "structure/header-simple",
+          "block": "header (variante simple)",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/header-simple/header-simple.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/header-simple/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/header-simple/header-simple.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/components/navigation-simple/navigation-simple.scss"
+          ],
+          "javaModels": []
+        },
+        {
+          "aem": "structure/navigation",
+          "block": "header (interno)",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation/desktopPanel.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation/group.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation/item.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation/itemContent.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation/navigation.html"
+          ],
+          "dialog": [],
+          "frontend": [],
+          "javaModels": []
+        },
+        {
+          "aem": "structure/navigation-simple",
+          "block": "header (interno, variante simple)",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation-simple/desktopPanel.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation-simple/group.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation-simple/item.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation-simple/itemContent.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/navigation-simple/navigation-simple.html"
+          ],
+          "dialog": [],
+          "frontend": [],
+          "javaModels": []
+        },
+        {
+          "aem": "structure/languagenavigation",
+          "block": "header (interno)",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/languagenavigation/languagenavigation.html"
+          ],
+          "dialog": [],
+          "frontend": [],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/language_navigation/LanguageNavigationModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/language_navigation/NavigationItemWrapper.java"
+          ]
+        }
+      ]
+    },
+    "L2-hero-footer": {
+      "order": "paralelo tras L0",
+      "components": [
+        {
+          "aem": "content/hero",
+          "block": "hero",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/hero/hero.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/hero/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/hero/hero.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/hero/hero.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/hero/HeroModel.java"
+          ]
+        },
+        {
+          "aem": "content/breadcrumb",
+          "block": "breadcrumb",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/breadcrumb/breadcrumb.html"
+          ],
+          "dialog": [],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/breadcrumb/breadcrumb.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/breadcrumb/BreadcrumbModel.java"
+          ]
+        },
+        {
+          "aem": "content/teaser",
+          "block": "teaser",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/teaser/teaser.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/teaser/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/teaser/teaser.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/teaser/TeaserModel.java"
+          ]
+        },
+        {
+          "aem": "structure/footer",
+          "block": "footer",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/footer/footer.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/footer/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/footer/footer.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/footer/FooterLinksModel.java"
+          ]
+        },
+        {
+          "aem": "structure/footer-simple",
+          "block": "footer (variante simple)",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/footer-simple/footer-simple.html"
+          ],
+          "dialog": [],
+          "frontend": [],
+          "javaModels": []
+        },
+        {
+          "aem": "content/footer-links",
+          "block": "footer (interno)",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/footer-links/footer-links.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/footer-links/_cq_dialog/.content.xml"
+          ],
+          "frontend": [],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/footer/FooterLinksModel.java"
+          ]
+        },
+        {
+          "aem": "content/social-links",
+          "block": "footer (interno)",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/social-links/social-links.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/social-links/_cq_dialog/.content.xml"
+          ],
+          "frontend": [],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/social_links/SocialLinksModel.java"
+          ]
+        },
+        {
+          "aem": "structure/modal-sanitary",
+          "block": "modal-sanitary",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/modal-sanitary/modal-sanitary.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/structure/modal-sanitary/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/modal-sanitary/author.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/components/modal-sanitary/modal-sanitary.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/modal-sanitary/modal-sanitary.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/modal_sanitary/ModalSanitaryModel.java"
+          ]
+        },
+        {
+          "aem": "content/embed",
+          "block": "embed",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/embed/embed.html"
+          ],
+          "dialog": [],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/embed/embed-analytics.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/embed/embed.scss"
+          ],
+          "javaModels": []
+        }
+      ]
+    },
+    "L3-carousels": {
+      "order": "paralelo tras L0 (consume scripts/ferrer-carousel.js y ferrer-modal.js)",
+      "components": [
+        {
+          "aem": "content/carousel-base",
+          "block": "carousel-base",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/carousel-base/card-templates.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/carousel-base/carousel-base.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/carousel-base/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/carousel-base/carousel-base.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/carousel-base/carousel-base.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/carousel_base/CardModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/carousel_base/CarouselBaseModel.java"
+          ]
+        },
+        {
+          "aem": "content/carousel-simple",
+          "block": "carousel-simple",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/carousel-simple/carousel-simple.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/carousel-simple/controls.html"
+          ],
+          "dialog": [],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/carousel-simple/carousel-simple.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/carousel-simple/carousel-simple.scss"
+          ],
+          "javaModels": []
+        },
+        {
+          "aem": "content/block-numbers",
+          "block": "block-numbers",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-numbers/block-numbers.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-numbers/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/block-numbers/block-numbers.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/block-numbers/block-numbers.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/block_numbers/BlockNumbersModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/block_numbers/ItemModel.java"
+          ]
+        },
+        {
+          "aem": "content/block-content-links",
+          "block": "block-content-links",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-content-links/block-content-links.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-content-links/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/block-content-links/block-content-links.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/block-content-links/block-content-links.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/block_links/BlockLinksModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/block_links/CardModel.java"
+          ]
+        },
+        {
+          "aem": "content/card-list",
+          "block": "card-list",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/card-list/card-list.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/card-list/card-templates.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/card-list/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/card-list/card-list.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/card-list/card-list.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/site/cards/card_actions.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/card_list/CardListModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/card_list/CardModel.java"
+          ]
+        },
+        {
+          "aem": "content/card-carousel-modal",
+          "block": "card-carousel-modal",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/card-carousel-modal/card-carousel-modal.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/card-carousel-modal/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/card-carousel-modal/card-carousel-modal.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/card-carousel-modal/card-carousel-modal.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/card_carousel_modal/CardCarouselModalModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/card_carousel_modal/ItemModel.java"
+          ]
+        }
+      ]
+    },
+    "L4-cards-links": {
+      "order": "paralelo tras L0 (consume scripts/ferrer-modal.js)",
+      "components": [
+        {
+          "aem": "content/card-ceo",
+          "block": "card-ceo",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/card-ceo/card-ceo.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/card-ceo/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/card-ceo/card-ceo.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/card_ceo/CardCeoModel.java"
+          ]
+        },
+        {
+          "aem": "content/card-list-modal",
+          "block": "card-list-modal",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/card-list-modal/card-list-modal.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/card-list-modal/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/card-list-modal/card-list-modal.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/card_list_modal/CardListModalModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/card_list_modal/ItemModel.java"
+          ]
+        },
+        {
+          "aem": "content/links-list",
+          "block": "links-list",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/links-list/links-list.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/links-list/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/links-list/links-list.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/links_list/ItemModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/links_list/LinksListModel.java"
+          ]
+        },
+        {
+          "aem": "content/links-image",
+          "block": "links-image",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/links-image/links-image.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/links-image/_cq_dialog/.content.xml",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/links-image/card-dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/links-image/links-image.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/links-image/links-image.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/links_image/CardModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/links_image/LinksImageModel.java"
+          ]
+        },
+        {
+          "aem": "content/links-menu",
+          "block": "links-menu",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/links-menu/links-menu.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/links-menu/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/links-menu/links-menu.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/links_menu/LinksMenuModel.java"
+          ]
+        },
+        {
+          "aem": "content/form-index",
+          "block": "form-index",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form-index/form-index.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form-index/form-index-entry/form-index-entry.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form-index/form-index-entry/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/form-index/form-index-entry.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/components/form-index/form-index.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/form_index/FormIndexEntryModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/form_index/FormIndexModel.java"
+          ]
+        },
+        {
+          "aem": "content/info-list",
+          "block": "info-list",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/info-list/info-list.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/info-list/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/info-list/info-list.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/info_list/InfoListModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/info_list/ItemModel.java"
+          ]
+        },
+        {
+          "aem": "content/catalog-apis",
+          "block": "catalog-apis",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/catalog-apis/catalog-apis.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/catalog-apis/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/catalog-apis/catalog-apis.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/site/cards/card_api.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/site/cards/card_api.js"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/catalog_apis/ApiModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/catalog_apis/CatalogApisModel.java"
+          ]
+        },
+        {
+          "aem": "content/site-distributor",
+          "block": "site-distributor",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/site-distributor/site-distributor.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/site-distributor/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/site-distributor/site-distributor.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/site-distributor/site-distributor.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/site/select-dropdown/select-dropdown.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/site/select-dropdown/select-dropdown.js"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/site_distributor/LanguageItem.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/site_distributor/SiteDistributorModel.java"
+          ]
+        }
+      ]
+    },
+    "L5-layout-data": {
+      "order": "paralelo tras L0",
+      "components": [
+        {
+          "aem": "content/block-content",
+          "block": "block-content",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-content/block-content.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-content/vertical.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-content/view-1.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-content/view-2.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-content/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/block-content/block-content.scss"
+          ],
+          "javaModels": []
+        },
+        {
+          "aem": "content/block-two-column",
+          "block": "block-two-column",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-two-column/block-two-column.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/block-two-column/container/container.html"
+          ],
+          "dialog": [],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/block-two-column/block-two-column.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/block_two_column/BlockTwoColumnModel.java"
+          ]
+        },
+        {
+          "aem": "content/content-sidebar",
+          "block": "content-sidebar",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/content-sidebar/content-sidebar.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/content-sidebar/container/container.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/content-sidebar/_cq_dialog/.content.xml",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/content-sidebar/container/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/content-sidebar/content-sidebar.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/content-sidebar/content-sidebar.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/content_sidebar/ContainerModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/content_sidebar/ContentSidebarModel.java"
+          ]
+        },
+        {
+          "aem": "content/content-tabs",
+          "block": "content-tabs",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/content-tabs/content-tabs.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/content-tabs/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/content-tabs/content-tabs.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/content-tabs/content-tabs.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/content_tabs/ContentTabsModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/content_tabs/ItemModel.java"
+          ]
+        },
+        {
+          "aem": "content/dropdown",
+          "block": "dropdown",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/dropdown/dropdown.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/dropdown/download-documents/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/dropdown/dropdown.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/dropdown/DataItem.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/dropdown/DropdownModel.java"
+          ]
+        },
+        {
+          "aem": "content/download-documents",
+          "block": "download-documents",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/download-documents/download-documents.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/download-documents/view-templates.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/download-documents/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/download-documents/download-documents.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/download_documents/DocumentModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/download_documents/DownloadDocumentsModel.java"
+          ]
+        },
+        {
+          "aem": "content/divider",
+          "block": "divider",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/divider/divider.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/divider/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/divider/divider.scss"
+          ],
+          "javaModels": []
+        },
+        {
+          "aem": "content/table-info",
+          "block": "table-info",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/table-info/table-info.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/table-info/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/table-info/table-info.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/table-info/table-info.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/table_info/TableInfoModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/table_info/TableInfoRowModel.java"
+          ]
+        },
+        {
+          "aem": "content/table-progress",
+          "block": "table-progress",
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/table-progress/table-progress.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/table-progress/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/table-progress/table-progress.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/table_progress/ItemModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/table_progress/TableProgressModel.java"
+          ]
+        }
+      ]
+    },
+    "DEFERRED-forms": {
+      "order": "fuera de esta iteración: dependen de servlets Java (FormServlet, recaptcha, mail sender)",
+      "components": [
+        {
+          "aem": "content/form",
+          "block": null,
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/form.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/checkbox.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/country.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/datepicker.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/dropdown.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/error-message.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/field.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/hidden.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/radio-button.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/text.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/textarea.html",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/step/step.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/_cq_dialog/.content.xml",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/field/_cq_dialog/.content.xml",
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form/step/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/form/form-analytics.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/form/form.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/form/form.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/calendar.scss",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/field-checkbox.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/field-country.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/field-datepicker.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/field-dropdown.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/field-radio.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/field-text.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/field-textarea.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/field.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/field/field.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/form/FormFieldModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/form/FormModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/form/StepModel.java"
+          ]
+        },
+        {
+          "aem": "content/form-flow",
+          "block": null,
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form-flow/form-flow.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/form-flow/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/form-flow/form-flow.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/form-flow/form-flow.scss"
+          ],
+          "javaModels": [
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/form_flow/FormFlowModel.java",
+            "core-ferrer/core/src/main/java/ferrer/catalog/ds/core/models/form_flow/FormFlowPanelModel.java"
+          ]
+        },
+        {
+          "aem": "content/spinner",
+          "block": null,
+          "htl": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/spinner/spinner.html"
+          ],
+          "dialog": [
+            "core-ferrer/ui.apps/src/main/content/jcr_root/apps/ferrer-catalog-ds/components/content/spinner/_cq_dialog/.content.xml"
+          ],
+          "frontend": [
+            "core-ferrer/ui.frontend/src/main/webpack/components/spinner/spinner.js",
+            "core-ferrer/ui.frontend/src/main/webpack/components/spinner/spinner.scss"
+          ],
+          "javaModels": []
+        }
+      ]
+    },
+    "NOT-A-BLOCK": {
+      "content/container + structure/container": "sección EDS + section metadata (L0)",
+      "content/text, content/title, content/image, content/button": "contenido por defecto (models/_text|_title|_image|_button.json) + decoración global (L0)",
+      "content/experiencefragment, structure/page-xf, structure/xf-modal": "blocks/fragment existente + fragmentos /fragments/... y /modals/... (L0 para el util de modal)",
+      "structure/page": "head.html + scripts.js + delayed.js + metadatos de página (L0)",
+      "_shared/templates/pagination + components/pagination": "sin uso en ningún HTL de este repo: no se migra",
+      "site/cards/card_img.scss, _shared/templates/cards/card-stories-templates.html": "sin uso en ningún HTL: no se migra"
+    }
+  }
+}

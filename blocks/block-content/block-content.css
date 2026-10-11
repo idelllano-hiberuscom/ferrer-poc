@@ -1,0 +1,97 @@
+.block-content-container {
+    .block-content {
+        .cmp-block-content__view-1-text {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+
+            @media (width >= 1024px) {
+                gap: var(--space-10);
+            }
+        }
+
+        .cmp-block-content__view-2-text {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-12);
+
+            @media (width >= 1024px) {
+                gap: var(--space-10);
+                justify-content: center;
+            }
+        }
+
+        /* ── right: alineación inversa ── */
+        .cmp-block-content--right {
+            .cmp-block-content__view-1-text,
+            .cmp-block-content__view-2-text {
+                @media (width >= 1024px) {
+                    order: -1;
+                }
+            }
+        }
+
+        .cmp-block-content__view-2 {
+            &.ferrer-row {
+                row-gap: var(--space-12);
+
+                @media (width >= 1024px) {
+                    row-gap: var(--space-6);
+                }
+            }
+
+            &.cmp-block-content--left .cmp-block-content__view-2-text {
+                @media (width >= 1024px) {
+                    padding-left: var(--space-24);
+                }
+            }
+        }
+
+        .cmp-block-content__view-2-image img {
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+
+            @media (width >= 1024px) {
+                aspect-ratio: 5 / 4;
+            }
+        }
+
+        .cmp-block-content__vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-12);
+            text-align: center;
+
+            @media (width >= 1024px) {
+                gap: var(--space-16);
+            }
+        }
+
+        /* ── template-theme ── */
+        &.template-theme--red,
+        &.template-theme--blue,
+        &.template-theme--purple,
+        &.template-theme--green {
+            .cmp-title .graffiti-gradient,
+            .cmp-title .graffiti-blue {
+                color: var(--color-template-600);
+                -webkit-text-fill-color: var(--color-template-600);
+            }
+        }
+
+        /* ── bottom (solo view-1) ── */
+        &.block-content--bottom .ferrer-row {
+            @media (width >= 1024px) {
+                align-items: end;
+            }
+
+            .text {
+                @media (width >= 1024px) {
+                    display: flex;
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+}

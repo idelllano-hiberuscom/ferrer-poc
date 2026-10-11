@@ -1,0 +1,130 @@
+{
+  "definitions": [
+    {
+      "title": "Block Content",
+      "id": "block-content",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Block Content",
+              "model": "block-content",
+              "classes": "view-1",
+              "classes_position": "left",
+              "titleType": "h2",
+              "body_ctaType": "primary"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "block-content",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes",
+          "label": "View",
+          "value": "view-1",
+          "options": [
+            { "name": "View 1 (title | text + button)", "value": "view-1" },
+            { "name": "View 2 (image | title + text + button)", "value": "view-2" },
+            { "name": "Vertical (centered)", "value": "vertical" }
+          ]
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes_position",
+          "label": "Text position (view 1 and view 2)",
+          "value": "left",
+          "options": [
+            { "name": "Left", "value": "left" },
+            { "name": "Right", "value": "right" }
+          ]
+        },
+        {
+          "component": "multiselect",
+          "valueType": "string",
+          "name": "classes_style",
+          "label": "Style",
+          "options": [
+            { "name": "Bottom alignment (view 1)", "value": "block-content--bottom" },
+            { "name": "Theme red", "value": "template-theme--red" },
+            { "name": "Theme blue", "value": "template-theme--blue" },
+            { "name": "Theme purple", "value": "template-theme--purple" },
+            { "name": "Theme green", "value": "template-theme--green" }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "titleType",
+          "label": "Title type",
+          "value": "h2",
+          "options": [
+            { "name": "H1", "value": "h1" },
+            { "name": "H2", "value": "h2" },
+            { "name": "H3", "value": "h3" },
+            { "name": "H4", "value": "h4" },
+            { "name": "H5", "value": "h5" },
+            { "name": "H6", "value": "h6" }
+          ]
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "body_text",
+          "label": "Text"
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "body_cta",
+          "label": "Button link"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "body_ctaText",
+          "label": "Button text"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "body_ctaType",
+          "label": "Button style",
+          "value": "primary",
+          "options": [
+            { "name": "Primary", "value": "primary" },
+            { "name": "Secondary", "value": "secondary" }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image (view 2)",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Image alt text"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

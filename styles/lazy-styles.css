@@ -1,1 +1,487 @@
-/* add global styles that can be loaded post LCP here */
+/*
+ * Ferrer — global styles loaded post-LCP.
+ * 1:1 port of modal.scss, carousel-controls.scss, scrollbar.scss, cards/card_basic.scss,
+ * cards/card_managers.scss and the carousel-control colours of container.scss.
+ */
+
+/* stylelint-disable no-descending-specificity -- rule order kept 1:1 with the source SCSS files */
+
+/* ===== SCROLL BAR (scrollbar.scss) ===== */
+.scroll-bar {
+    &::-webkit-scrollbar {
+        width: 0.25rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--neutral-50);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--neutral-500);
+        border-radius: var(--radius-card-regular);
+    }
+}
+
+/* ===== MODAL (modal.scss) — base position / hidden state lives in styles.css ===== */
+.cmp-modal[aria-hidden='false'] .cmp-modal__container {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.cmp-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(0 0 0 / 60%);
+    cursor: pointer;
+    backdrop-filter: blur(0.125rem);
+
+    &.cmp-modal--overlay-disabled {
+        background-color: transparent;
+        pointer-events: none;
+        backdrop-filter: none;
+    }
+
+    &.cmp-modal--blur-enabled {
+        backdrop-filter: blur(0.5rem);
+    }
+}
+
+.cmp-modal__container {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    border-radius: var(--radius-card-regular);
+    padding: 1rem;
+    width: 90%;
+    max-width: 43.1875rem;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 0.5rem 2.125rem 0 rgb(99 119 121 / 16%);
+    transform: translateY(1.5rem);
+    opacity: 0;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+
+    @media (width >= 1024px) {
+        padding: 2rem;
+        gap: 1.5rem;
+    }
+}
+
+.cmp-modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--neutral-700);
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: rgb(0 0 0 / 80%);
+    }
+
+    &:focus-visible {
+        outline: 0.125rem solid var(--neutral-700);
+        outline-offset: 0.125rem;
+    }
+}
+
+.cmp-modal__content {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-right: 0.25rem;
+
+    @media (width >= 1024px) {
+        gap: 1.5rem;
+        padding-right: 0.5rem;
+    }
+
+    & .cmp-image {
+        margin-bottom: 1.5rem;
+
+        & img {
+            border-radius: 0.25rem;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.cmp-modal__media img {
+    aspect-ratio: 4 / 5;
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    border-radius: var(--radius-card-regular);
+
+    @media (width >= 601px) {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+.cmp-modal__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ===== CAROUSEL CONTROLS (carousel-controls.scss) ===== */
+.cmp-controls {
+    z-index: 2;
+    display: flex;
+    width: 100%;
+}
+
+.cmp-controls__pagination .swiper-pagination-bullet {
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 0;
+    border: var(--border-xsmall) solid var(--color-template-700);
+    background-color: transparent;
+    border-radius: 50%;
+    opacity: 1;
+
+    &:hover {
+        background-color: var(--color-template-800);
+        opacity: 1;
+    }
+
+    &:active {
+        background-color: var(--neutral-1000);
+    }
+
+    &:focus {
+        outline: 0.0625rem solid var(--color-template-700);
+        outline-offset: 0.125rem;
+    }
+}
+
+.cmp-controls__pagination :is(.swiper-pagination-bullet-active, .swiper-pagination-bullet .cmp-carousel__indicator--active) {
+    background-color: var(--color-template-700);
+}
+
+.cmp-controls__navigation--next,
+.cmp-controls__navigation--prev {
+    color: var(--color-template-700);
+
+    & i {
+        font-size: 1.5rem;
+    }
+
+    &.disabled,
+    &.swiper-button-disabled {
+        display: none;
+    }
+}
+
+/* container.scss: white controls on dark sections */
+.section:is(.container-black, .container-green-gradient, .container-blue-gradient, .container-carrousel-controls-white) .cmp-controls {
+    & .cmp-controls__navigation--next,
+    & .cmp-controls__navigation--prev {
+        color: var(--neutral-0);
+    }
+
+    & .cmp-controls__pagination .swiper-pagination-bullet {
+        border: var(--border-xsmall) solid var(--neutral-0);
+        background-color: transparent;
+
+        &.swiper-pagination-bullet-active {
+            background-color: var(--neutral-0);
+        }
+
+        &:hover {
+            background-color: var(--neutral-0);
+            opacity: 1;
+        }
+
+        &:active {
+            background-color: var(--neutral-1000);
+        }
+
+        &:focus {
+            outline: 0.0625rem solid var(--neutral-0);
+            outline-offset: 0.125rem;
+        }
+    }
+}
+
+/* ===== CARD BASIC (cards/card_basic.scss) ===== */
+.card-basic {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    height: 100%;
+    border-radius: var(--radius-card-regular);
+    border: var(--border-xsmall) solid transparent;
+    background-color: var(--background-white);
+    box-shadow: var(--shadow-1);
+
+    @media (width >= 1024px) {
+        padding: 2rem;
+        gap: 1.5rem;
+    }
+}
+
+.card-basic__media {
+    border-radius: var(--radius-card-regular);
+    aspect-ratio: 16 / 5;
+    overflow: hidden;
+    position: relative;
+    transition: aspect-ratio 0.4s ease;
+
+    @media (width >= 1024px) {
+        aspect-ratio: 16 / 9;
+    }
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgb(0 0 0 / 16%);
+        z-index: 2;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+}
+
+.card-basic__content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    gap: 1.5rem;
+}
+
+.card-basic__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    flex: 1;
+
+    @media (width >= 1024px) {
+        gap: 1.5rem;
+    }
+}
+
+.card-basic__content-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @media (width >= 1024px) {
+        gap: 1.5rem;
+    }
+
+    & .card-basic__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    & .card-basic__header-icon {
+        font-size: 1.5rem;
+    }
+}
+
+.card-basic__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @media (width >= 1024px) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+@media (hover: hover) {
+    .card-basic:hover {
+        border: var(--border-xsmall) solid transparent;
+        background: linear-gradient(var(--background-white), var(--background-white)) padding-box, linear-gradient(137.02deg, var(--color-template-700) 54.33%, #557d00 99.66%) border-box;
+        box-shadow: none;
+
+        & .card-basic__media {
+            position: relative;
+            aspect-ratio: 16 / 5;
+
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.card-basic--transparent {
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+
+    &:hover {
+        box-shadow: none;
+        border: none;
+        background: transparent;
+    }
+}
+
+@media (width >= 1024px) {
+    /* the original forces 5/4 with !important over the hover ratio: same specificity win here */
+    .card-basic--transparent .card-basic__media,
+    .card-basic--transparent:hover .card-basic__media {
+        aspect-ratio: 5 / 4;
+    }
+}
+
+.card-basic--small {
+    padding: 1.5rem;
+
+    @media (width >= 601px) {
+        width: 19rem;
+    }
+}
+
+.card-basic--large {
+    width: 100%;
+    max-width: 328px;
+
+    @media (width >= 601px) {
+        max-width: 25.75rem;
+    }
+}
+
+.card-basic--dark {
+    color: var(--neutral-0);
+
+    & :is(.card-basic__header-title, .card-basic__content-description, .card-basic__icon) {
+        color: var(--neutral-0);
+    }
+}
+
+/* ===== CARD MANAGERS (cards/card_managers.scss) ===== */
+.card-managers {
+    width: 20.5rem;
+    min-height: 28.75rem;
+    padding: 1.25rem;
+    border-radius: 0.25rem;
+    border: var(--border-xsmall) solid var(--border-xlight);
+    background-color: var(--neutral-0);
+    cursor: pointer;
+    box-shadow: var(--shadow-1);
+
+    @media (width >= 1024px) {
+        width: 25.75rem;
+    }
+}
+
+.card-managers__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card-managers__image {
+    border-radius: 0.25rem;
+    height: 21.5rem;
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgb(0 0 0 / 16%);
+        opacity: 0;
+        z-index: 1;
+    }
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.card-managers__body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    gap: 1rem;
+}
+
+.card-managers__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.card-managers__text--name {
+    color: var(--neutral-1000);
+}
+
+.card-managers__text--position {
+    color: var(--neutral-800);
+}
+
+.card-managers__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0.25rem;
+    border: var(--border-xsmall) solid var(--neutral-200);
+    border-radius: 2rem;
+    height: 2rem;
+    width: 2rem;
+
+    & i {
+        font-size: 1.5rem;
+        color: var(--color-template-700, var(--default-primary-700));
+    }
+}
+
+.card-managers:hover {
+    border: var(--border-xsmall) solid transparent;
+    background: linear-gradient(var(--background-white), var(--background-white)) padding-box, linear-gradient(137.02deg, var(--color-template-700) 54.33%, #557d00 99.66%) border-box;
+    box-shadow: none;
+
+    & .card-managers__image::after {
+        opacity: 1;
+    }
+
+    & .card-managers__button {
+        border: var(--border-xsmall) solid var(--color-template-800);
+
+        & i {
+            color: var(--color-template-800);
+        }
+    }
+}
+
+.card-managers:active .card-managers__button {
+    border: var(--border-xsmall) solid var(--text-link-pressed);
+
+    & i {
+        font-size: 1rem;
+        color: var(--text-link-pressed);
+    }
+}

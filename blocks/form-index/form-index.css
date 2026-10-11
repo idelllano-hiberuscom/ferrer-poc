@@ -1,0 +1,103 @@
+.form-index-container {
+    .form-index {
+        .cmp-form-index {
+            display: flex;
+            flex-direction: column;
+            gap: var(--divider-space-large);
+
+            @media (width >= 601px) {
+                gap: var(--space-8);
+            }
+
+            @media (width >= 1024px) {
+                flex-direction: row;
+                gap: var(--padding-medium);
+            }
+        }
+
+        .cmp-form-index__container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--padding-medium);
+            flex: 1 0 0;
+
+            @media (width >= 1024px) {
+                gap: var(--space-10);
+            }
+        }
+
+        .cmp-form-index__image {
+            height: 25.625rem;
+
+            @media (width >= 601px) {
+                height: 19.59rem;
+            }
+
+            @media (width >= 1024px) {
+                width: 25.685rem;
+                height: auto;
+            }
+
+            .cmp-image {
+                height: 100%;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: var(--radius-card-regular);
+                }
+            }
+        }
+
+        .cmp-form-index-entry {
+            display: flex;
+            flex-direction: column;
+            gap: var(--padding-xlarge);
+
+            @media (width >= 1024px) {
+                max-width: 45.688rem;
+            }
+        }
+
+        .cmp-form-index-entry__list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--padding-medium);
+            cursor: pointer;
+        }
+
+        .cmp-form-index-entry__item {
+            border: var(--border-xsmall) solid var(--border-xlight);
+            border-radius: var(--tag-radio);
+            padding: var(--padding-xsmall);
+            box-shadow: var(--shadow-1);
+
+            &:hover {
+                box-shadow: none;
+                border: var(--border-xsmall) solid var(--color-template-700, var(--default-primary-700));
+            }
+        }
+
+        .cmp-form-index-entry__link {
+            display: block;
+            width: 100%;
+            color: var(--neutral-1000);
+            font: inherit;
+            text-align: left;
+
+            i {
+                position: relative;
+                top: 0.125rem;
+                margin-left: var(--padding-xsmall);
+                color: var(--color-template-700, var(--default-primary-700));
+            }
+
+            &:focus-visible {
+                outline: var(--border-medium) solid var(--color-template-800, var(--default-primary-700));
+                outline-offset: var(--padding-xsmall);
+                border-radius: 0.125rem;
+            }
+        }
+    }
+}

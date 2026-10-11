@@ -1,0 +1,144 @@
+.table-progress-container {
+    .cmp-table-progress {
+        display: flex;
+        flex-direction: column;
+
+        .cmp-table-progress__header {
+            display: none;
+
+            @media (width >= 1024px) {
+                display: grid;
+                grid-template-columns: 2fr repeat(6, 1fr);
+                align-items: center;
+                padding: var(--space-2) var(--space-4);
+                color: var(--text-secondary);
+            }
+
+            span {
+                @media (width >= 1024px) {
+                    text-align: center;
+
+                    &:first-child {
+                        text-align: left;
+                    }
+                }
+            }
+        }
+
+        .cmp-table-progress__list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .cmp-table-progress__item {
+            background-color: var(--background-white);
+            padding: var(--space-4);
+            border-radius: var(--border-xlarge);
+            border: var(--border-xsmall) solid var(--border-table);
+        }
+
+        .cmp-table-progress__program {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+
+            @media (width >= 1024px) {
+                flex-direction: row;
+                align-items: center;
+                gap: var(--space-10);
+            }
+        }
+
+        .cmp-table-progress__program-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            align-items: flex-start;
+
+            @media (width >= 1024px) {
+                flex: 2;
+            }
+        }
+
+        .cmp-table-progress__tag {
+            display: inline-block;
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--border-xlarge);
+            background-color: var(--feedback-info-background);
+            color: var(--default-primary-700);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .cmp-table-progress__name {
+            font-weight: normal;
+            max-width: 16.875rem;
+        }
+
+        .cmp-table-progress__progress {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+
+            @media (width >= 1024px) {
+                flex: 6;
+            }
+        }
+
+        .cmp-table-progress__bar {
+            height: 2rem;
+            border-radius: var(--border-xlarge);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            overflow: hidden;
+        }
+
+        .cmp-table-progress__bar-fill {
+            height: 100%;
+            border-radius: var(--border-xlarge);
+            background: linear-gradient(90deg, color-mix(in srgb, var(--default-primary-500) 0%, transparent) 0%, color-mix(in srgb, var(--default-primary-500) 15%, transparent) 40%, #84bd00 100%);
+            transition: width 0.4s ease;
+
+            /* ── phases ── */
+            &.phase-0 {
+                width: 0%;
+            }
+
+            &.phase-1 {
+                width: 25%;
+            }
+
+            &.phase-2 {
+                width: 41.66%;
+            }
+
+            &.phase-3 {
+                width: 58.33%;
+            }
+
+            &.phase-4 {
+                width: 78.33%;
+            }
+
+            &.phase-5 {
+                width: 100%;
+            }
+        }
+
+        .cmp-table-progress__phase-label {
+            white-space: nowrap;
+            color: var(--text-secondary);
+        }
+
+        .cmp-table-progress__footer {
+            margin-top: var(--space-2);
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+    }
+}

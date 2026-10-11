@@ -9,7 +9,18 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  getMetadata,
+  buildBlock,
 } from './aem.js';
+import {
+  BREAKPOINTS,
+  decorateAuthoredButton,
+  getTitleFontClass,
+} from './ferrer-utils.js';
+import { getLanguage } from './ferrer-i18n.js';
+
+/** Themes defined in styles.css (_theme.scss only defines default). */
+const KNOWN_THEMES = ['default'];
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
@@ -58,12 +69,56 @@ async function loadFonts() {
 }
 
 /**
+ * Applies the page theme as `template-theme--{name}` on <body> (AEM page cssClassNames).
+ * Unknown themes fall back to default so the --color-template-* tokens always exist.
+ */
+function decorateFerrerTheme() {
+  const theme = (getMetadata('theme') || 'default').trim().toLowerCase();
+  if (!KNOWN_THEMES.includes(theme)) {
+    // eslint-disable-next-line no-console
+    console.warn(`Unknown Ferrer theme "${theme}", using default`);
+  }
+  document.body.classList.add(`template-theme--${KNOWN_THEMES.includes(theme) ? theme : 'default'}`);
+}
+
+/**
+ * Auto block for the sanitary-professional modal (structure/modal-sanitary in AEM, driven
+ * by page properties). Page metadata:
+ *   show-modal-sanitary = true · modal-sanitary = /fragments/… (modal content fragment)
+ *   modal-sanitary-redirect · modal-sanitary-overlay-disabled · modal-sanitary-blur-enabled
+ * Builds, in a new last section, a key/value block readable with readBlockConfig():
+ *   fragment | redirect | overlay-disabled | blur-enabled
+ * @param {Element} main
+ */
+function buildModalSanitary(main) {
+  const show = getMetadata('show-modal-sanitary').toLowerCase() === 'true';
+  const path = getMetadata('modal-sanitary');
+  if (!show || !path || main.querySelector('.modal-sanitary')) return;
+
+  const link = (href) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.textContent = href;
+    return a;
+  };
+  const rows = [['fragment', link(path)]];
+  const redirect = getMetadata('modal-sanitary-redirect');
+  if (redirect) rows.push(['redirect', link(redirect)]);
+  rows.push(['overlay-disabled', getMetadata('modal-sanitary-overlay-disabled') || 'false']);
+  rows.push(['blur-enabled', getMetadata('modal-sanitary-blur-enabled') || 'false']);
+
+  const section = document.createElement('div');
+  section.append(buildBlock('modal-sanitary', rows));
+  main.append(section);
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
-function buildAutoBlocks() {
+function buildAutoBlocks(main) {
   try {
-    // TODO: add auto block, if needed
+    if (main === document.querySelector('main')) buildModalSanitary(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -71,12 +126,13 @@ function buildAutoBlocks() {
 }
 
 /**
- * Decorates formatted links to style them as buttons.
+ * Decorates authored links of default content as Ferrer buttons (content/button).
+ *   <strong><a> -> primary large · <em><a> -> secondary large · <strong><em><a> -> ghost large
+ * Links inside blocks are left to each block (decorateAuthoredButton in ferrer-utils.js).
  * @param {HTMLElement} main The main container element
  */
 export function decorateButtons(main) {
-  main.querySelectorAll('p a[href]').forEach((a) => {
-    a.title = a.title || a.textContent;
+  main.querySelectorAll('.default-content-wrapper p a[href]').forEach((a) => {
     const p = a.closest('p');
     const text = a.textContent.trim();
 
@@ -89,23 +145,63 @@ export function decorateButtons(main) {
     } catch { /* continue */ }
 
     // require authored formatting for buttonization
-    const strong = a.closest('strong');
-    const em = a.closest('em');
-    if (!strong && !em) return;
+    if (!a.closest('strong') && !a.closest('em')) return;
+    decorateAuthoredButton(a);
+  });
+}
 
-    p.className = 'button-wrapper';
-    a.className = 'button';
-    if (strong && em) { // high-impact call-to-action
-      a.classList.add('accent');
-      const outer = strong.contains(em) ? strong : em;
-      outer.replaceWith(a);
-    } else if (strong) {
-      a.classList.add('primary');
-      strong.replaceWith(a);
-    } else {
-      a.classList.add('secondary');
-      em.replaceWith(a);
+/**
+ * Default content as the AEM title/image components:
+ *   - headings get the Ferrer typography class (Boldine by default; DM Sans when the section
+ *     has the `title-dm-sans` style, like the graffitiDisabled policy of TitleModel)
+ *   - paragraphs holding only an image get .cmp-image
+ * @param {Element} main
+ */
+function decorateDefaultContent(main) {
+  main.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
+    const font = wrapper.closest('.section')?.classList.contains('title-dm-sans') ? 'primary' : 'special-1';
+    wrapper.querySelectorAll(':scope > :is(h1, h2, h3, h4, h5, h6)').forEach((heading) => {
+      if ([...heading.classList].some((c) => c.startsWith('ferrer-'))) return;
+      heading.classList.add(getTitleFontClass(Number(heading.tagName.substring(1)), font));
+    });
+    wrapper.querySelectorAll(':scope > p > picture').forEach((picture) => {
+      const p = picture.parentElement;
+      if (p.textContent.trim() === '') p.classList.add('cmp-image');
+    });
+  });
+}
+
+/**
+ * Builds a media-bus optimized background URL (keeps external URLs untouched).
+ * @param {string} src
+ * @param {number} width
+ * @returns {string}
+ */
+function backgroundUrl(src, width) {
+  try {
+    const url = new URL(src, window.location.href);
+    if (url.origin === window.location.origin && url.pathname.includes('media_')) {
+      return `url("${url.pathname}?width=${width}&format=webply&optimize=medium")`;
     }
+    return `url("${url.href}")`;
+  } catch {
+    return `url("${src}")`;
+  }
+}
+
+/**
+ * Port of container.js: section metadata background-desktop / background-mobile become
+ * CSS custom properties; the swap at 768px is done in CSS. Mobile falls back to desktop
+ * (ContainerModel#getMobileBackground).
+ * @param {Element} main
+ */
+function decorateSectionBackgrounds(main) {
+  main.querySelectorAll('.section[data-background-desktop], .section[data-background-mobile]').forEach((section) => {
+    const { backgroundDesktop, backgroundMobile } = section.dataset;
+    if (!backgroundDesktop && !backgroundMobile) return;
+    section.classList.add('has-cover-bg');
+    section.style.setProperty('--section-bg-desktop', backgroundUrl(backgroundDesktop || backgroundMobile, 2000));
+    section.style.setProperty('--section-bg-mobile', backgroundUrl(backgroundMobile || backgroundDesktop, 750));
   });
 }
 
@@ -120,6 +216,8 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  decorateDefaultContent(main);
+  decorateSectionBackgrounds(main);
 }
 
 /**
@@ -127,8 +225,9 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  document.documentElement.lang = getLanguage();
   decorateTemplateAndTheme();
+  decorateFerrerTheme();
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
@@ -138,7 +237,7 @@ async function loadEager(doc) {
 
   try {
     /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
-    if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
+    if (window.innerWidth >= BREAKPOINTS.desktop || sessionStorage.getItem('fonts-loaded')) {
       loadFonts();
     }
   } catch (e) {
@@ -151,7 +250,7 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
-  loadHeader(doc.querySelector('header'));
+  loadHeader(doc.querySelector('body > header'));
 
   const main = doc.querySelector('main');
   await loadSections(main);
@@ -160,7 +259,7 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadFooter(doc.querySelector('footer'));
+  loadFooter(doc.querySelector('body > footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();

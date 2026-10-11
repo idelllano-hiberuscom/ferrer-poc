@@ -1,0 +1,186 @@
+.catalog-apis-container {
+    /* stylelint-disable no-descending-specificity -- base + state/variant overrides kept 1:1 with the source SCSS */
+
+    .catalog-apis {
+        .cmp-catalog-apis__catalog {
+            margin-bottom: var(--space-5);
+            color: var(--neutral-0);
+            display: flex;
+            flex-direction: column;
+            gap: var(--padding-medium);
+
+            @media (width >= 1024px) {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: var(--space-10);
+            }
+        }
+
+        /* ── card-api (site/cards/card_api.scss) ── */
+        .card-api {
+            position: relative;
+            min-height: 360px;
+            border-radius: var(--radius-card-regular);
+            border: var(--border-xsmall) solid var(--default-primary-500);
+            box-shadow: var(--shadow-1);
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: var(--space-5);
+            height: 100%;
+
+            @media (hover: hover) {
+                &:hover {
+                    .card-api__front {
+                        opacity: 0;
+                    }
+
+                    .card-api__back {
+                        opacity: 1;
+                    }
+
+                    .card-api__actions {
+                        a {
+                            color: var(--neutral-700);
+                        }
+
+                        .icon-minus {
+                            display: block;
+                        }
+
+                        .icon-plus {
+                            display: none;
+                        }
+                    }
+
+                    .card-api__actions-left i {
+                        transition: color 0.4s ease;
+
+                        &:hover {
+                            color: var(--default-primary-800);
+                        }
+                    }
+                }
+            }
+
+            &.card-api--flipped {
+                .card-api__front {
+                    opacity: 0;
+                }
+
+                .card-api__back {
+                    opacity: 1;
+                }
+
+                .card-api__actions {
+                    a {
+                        color: var(--neutral-700);
+                    }
+
+                    .icon-minus {
+                        display: block;
+                    }
+
+                    .icon-plus {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .card-api__front {
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: opacity 0.4s ease;
+            gap: var(--padding-xlarge);
+            padding-bottom: var(--padding-xlarge);
+        }
+
+        .card-api__front-title,
+        .card-api__front-description {
+            color: var(--neutral-0);
+        }
+
+        .card-api__back {
+            position: absolute;
+            inset: 0;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            background-color: var(--neutral-0);
+            padding: var(--space-5);
+        }
+
+        .card-api__back-title {
+            color: var(--neutral-1000);
+            margin-bottom: 0.375rem; /* divergencia deliberada: valor 1:1 del SCSS original, sin paso en la escala --space-* */
+        }
+
+        .card-api__back-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-1) var(--padding-small);
+            border-radius: var(--radius-card-regular);
+            background-color: var(--neutral-50);
+            margin-bottom: var(--padding-medium);
+            color: var(--default-primary-700);
+        }
+
+        .card-api__back-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            flex: 1;
+            margin-bottom: var(--space-10);
+            gap: var(--padding-medium);
+        }
+
+        .card-api__back-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-api__back-field-label {
+            text-transform: uppercase;
+            color: var(--neutral-500);
+        }
+
+        .card-api__back-field-value {
+            color: var(--neutral-800);
+        }
+
+        .card-api__actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 5;
+
+            a {
+                color: var(--neutral-0);
+                font-size: 1.25rem;
+                display: flex;
+                align-items: center;
+            }
+
+            .icon-minus {
+                display: none;
+            }
+        }
+
+        .card-api__actions-left {
+            display: flex;
+            align-items: center;
+            gap: var(--padding-xlarge);
+        }
+
+        .card-api__toggle {
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,48 @@
+{
+  "definitions": [
+    {
+      "title": "Modal Sanitary",
+      "id": "modal-sanitary",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Modal Sanitary",
+              "model": "modal-sanitary"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "modal-sanitary",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title",
+          "required": true
+        },
+        {
+          "component": "textarea",
+          "valueType": "string",
+          "name": "text",
+          "label": "Modal text",
+          "required": true
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "ref",
+          "label": "Link of the \"No\" button",
+          "description": "Overridden by the page metadata modal-sanitary-redirect"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

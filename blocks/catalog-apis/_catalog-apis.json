@@ -1,0 +1,148 @@
+{
+  "definitions": [
+    {
+      "title": "Catalog APIs",
+      "id": "catalog-apis",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Catalog APIs",
+              "model": "catalog-apis",
+              "filter": "catalog-apis",
+              "mailto": "interquim@ferrer.com"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Catalog API",
+      "id": "catalog-api",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Catalog API",
+              "model": "catalog-api"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "catalog-apis",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title",
+          "required": true
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "fullCatalog",
+          "label": "Full catalog (PDF)",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "mailto",
+          "label": "Contact e-mail",
+          "value": "interquim@ferrer.com",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "catalog-api",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "info_description",
+          "label": "Description",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "info_tag",
+          "label": "Tag",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "specs_casNumber",
+          "label": "CAS number",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "specs_state",
+          "label": "Status",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "specs_size",
+          "label": "Batch size",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "specs_validity",
+          "label": "Shelf life",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "specs_availability",
+          "label": "DMF/CEP availability",
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "specs_pharmacopoeia",
+          "label": "Pharmacopoeia",
+          "required": true
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "pdf",
+          "label": "PDF",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "catalog-apis",
+      "components": [
+        "catalog-api"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "definitions": [
+    {
+      "title": "Table Progress",
+      "id": "table-progress",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Table Progress",
+              "model": "table-progress",
+              "filter": "table-progress"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Program",
+      "id": "table-progress-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Program",
+              "model": "table-progress-item",
+              "phase": "phase-0"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "table-progress",
+      "fields": [
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "footer",
+          "label": "Footer"
+        }
+      ]
+    },
+    {
+      "id": "table-progress-item",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tag",
+          "label": "Tag"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "phase",
+          "label": "Phase",
+          "value": "phase-0",
+          "options": [
+            { "name": "Preclinical", "value": "phase-0" },
+            { "name": "Phase 1", "value": "phase-1" },
+            { "name": "Phase 2", "value": "phase-2" },
+            { "name": "Phase 3", "value": "phase-3" },
+            { "name": "Registration", "value": "phase-4" },
+            { "name": "Market", "value": "phase-5" }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "table-progress",
+      "components": [
+        "table-progress-item"
+      ]
+    }
+  ]
+}

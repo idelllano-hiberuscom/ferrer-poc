@@ -1,0 +1,77 @@
+.card-carousel-modal-container {
+    .card-carousel-modal {
+        .cmp-card-carousel-modal {
+            .cmp-card-carousel-modal__carousel {
+                overflow: hidden;
+                width: 100%;
+
+                .swiper-wrapper {
+                    align-items: stretch;
+
+                    .swiper-slide {
+                        height: auto;
+                    }
+                }
+
+                /* ── no-slider ── */
+                &.no-slider {
+                    .swiper-wrapper {
+                        display: flex;
+                        gap: var(--padding-medium);
+
+                        .swiper-slide {
+                            flex: 0 0 calc(33.33% - var(--space-4));
+                            max-width: calc(33.33% - var(--space-4));
+                            padding-bottom: var(--space-8);
+                        }
+                    }
+
+                    /* replaces the inline display:none of toggleControls(false) */
+                    .js-carousel-next,
+                    .js-carousel-prev,
+                    .js-carousel-pagination {
+                        display: none;
+                    }
+                }
+
+                &.swiper-horizontal {
+                    display: flex;
+                    gap: var(--space-10);
+                }
+            }
+
+            .card-basic {
+                margin: var(--padding-xsmall);
+                box-shadow: 0 4px 7px 0 var(--shadow-color);
+                height: 25rem;
+
+                @media (width >= 1024px) {
+                    height: 31.25rem;
+                }
+
+                @media (hover: hover) {
+                    &:hover {
+                        box-shadow: none;
+                    }
+                }
+
+                .card-basic__media img {
+                    filter: grayscale(100%);
+                    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                .card-basic__content {
+                    flex: none;
+
+                    .card-basic__header-title {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+    }
+}

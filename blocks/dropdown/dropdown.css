@@ -1,0 +1,184 @@
+.dropdown-container {
+    .dropdown {
+        .cmp-accordion__item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+            border-bottom: var(--border-xsmall) solid var(--border-table);
+            padding: var(--space-8) 0;
+            -webkit-tap-highlight-color: transparent;
+
+            &:has(.container--dropdown-documents) {
+                gap: var(--space-6);
+            }
+        }
+
+        .cmp-accordion__title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1 0 0;
+            color: var(--neutral-800);
+            gap: 0.625rem;
+
+            i {
+                font-size: 1.5rem;
+                color: var(--neutral-1000);
+            }
+        }
+
+        /* ── dark: título ── */
+        &.dropdown--dark .cmp-accordion__title {
+            color: var(--neutral-0);
+
+            i {
+                color: var(--neutral-0);
+            }
+        }
+
+        .cmp-accordion__button--expanded {
+            .cmp-accordion__title {
+                color: var(--color-template-600);
+
+                i {
+                    transform: rotate(180deg);
+                    color: var(--color-template-600);
+                }
+            }
+        }
+
+        .cmp-accordion__button {
+            border: none;
+            appearance: none;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+
+            &:hover {
+                .cmp-accordion__title {
+                    color: var(--color-template-800);
+
+                    i {
+                        color: var(--color-template-800);
+                    }
+                }
+            }
+
+            &:active {
+                .cmp-accordion__title {
+                    color: var(--neutral-1000);
+
+                    i {
+                        color: var(--neutral-1000);
+                    }
+                }
+            }
+
+            &:focus:not(:focus-visible) {
+                outline: none;
+            }
+
+            &:focus-visible {
+                outline: var(--border-xsmall) solid var(--color-template-800);
+                outline-offset: var(--space-8);
+            }
+        }
+
+        /* Core Accordion v1 clientlib (core.wcm.components.accordion.v1), embedded in clientlib-base */
+        .cmp-accordion__panel--hidden {
+            display: none;
+        }
+
+        .cmp-accordion__panel--expanded {
+            display: block;
+            color: var(--neutral-1000);
+
+            .container--dropdown-documents {
+                .cmp-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: var(--space-6);
+                    padding-bottom: 0;
+                    padding-top: 0;
+                }
+            }
+
+            /* download-documents (vista small): su hoja va escopada a su propia sección */
+            .cmp-download-documents {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-4);
+            }
+
+            .cmp-download-documents__documents {
+                display: flex;
+                align-self: stretch;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                gap: var(--space-4);
+            }
+
+            .cmp-download-documents__title {
+                font-size: 1.125rem;
+                line-height: 150%;
+                font-family: var(--text-font-body);
+                font-weight: bold;
+                border-bottom: none;
+                padding-bottom: 0;
+
+                @media (width >= 1024px) {
+                    font-size: 1.25rem;
+                }
+            }
+        }
+
+        /* ── dark ── */
+        &.dropdown--dark {
+            .cmp-accordion__header {
+                border-bottom: var(--border-xsmall) solid var(--border-table);
+                padding: var(--space-6) 0;
+            }
+
+            .cmp-accordion__item {
+                border-bottom: none;
+                padding: 0;
+            }
+
+            .cmp-accordion__button--expanded {
+                border-bottom: none;
+
+                .cmp-accordion__title {
+                    color: var(--neutral-0);
+
+                    i {
+                        color: var(--neutral-0);
+                    }
+                }
+            }
+
+            .cmp-accordion__button {
+                padding: 0;
+                border: none;
+
+                &:hover,
+                &:active {
+                    .cmp-accordion__title {
+                        color: var(--neutral-0);
+
+                        i {
+                            color: var(--neutral-0);
+                        }
+                    }
+                }
+
+                &:focus-visible {
+                    outline: var(--border-xsmall) solid var(--neutral-0);
+                    outline-offset: var(--space-6);
+                }
+            }
+
+            .cmp-accordion__panel--expanded {
+                color: var(--neutral-0);
+            }
+        }
+    }
+}

@@ -21,6 +21,107 @@
           "name": "keywords",
           "multi": true,
           "label": "Keywords"
+        },
+        {
+          "component": "select",
+          "name": "theme",
+          "label": "Theme",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default",
+              "value": "default"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "language",
+          "label": "Language",
+          "valueType": "string",
+          "description": "Only needed outside /es/, /en/, /ca/",
+          "options": [
+            {
+              "name": "Spanish",
+              "value": "es"
+            },
+            {
+              "name": "English",
+              "value": "en"
+            },
+            {
+              "name": "Catalan",
+              "value": "ca"
+            }
+          ]
+        },
+        {
+          "component": "boolean",
+          "name": "show-modal-sanitary",
+          "label": "Show sanitary-professional modal",
+          "valueType": "boolean"
+        },
+        {
+          "component": "aem-content",
+          "name": "modal-sanitary",
+          "label": "Sanitary modal content (fragment)"
+        },
+        {
+          "component": "aem-content",
+          "name": "modal-sanitary-redirect",
+          "label": "Sanitary modal redirect (No button)"
+        },
+        {
+          "component": "boolean",
+          "name": "modal-sanitary-overlay-disabled",
+          "label": "Sanitary modal: disable overlay",
+          "valueType": "boolean"
+        },
+        {
+          "component": "boolean",
+          "name": "modal-sanitary-blur-enabled",
+          "label": "Sanitary modal: enable blur",
+          "valueType": "boolean"
+        },
+        {
+          "component": "text",
+          "name": "gtm-id",
+          "label": "Google Tag Manager ID",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "cmp-id",
+          "label": "Usercentrics settings ID",
+          "valueType": "string"
+        },
+        {
+          "component": "boolean",
+          "name": "cmp-draft",
+          "label": "Usercentrics draft",
+          "valueType": "boolean"
+        },
+        {
+          "component": "select",
+          "name": "footer-variant",
+          "label": "Footer variant",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "Simple",
+              "value": "simple"
+            }
+          ]
+        },
+        {
+          "component": "boolean",
+          "name": "footer-hide-bcorp-logo",
+          "label": "Footer: hide B Corp logo",
+          "valueType": "boolean"
         }
       ]
     }

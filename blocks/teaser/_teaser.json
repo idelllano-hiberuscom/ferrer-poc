@@ -1,0 +1,79 @@
+{
+  "definitions": [
+    {
+      "title": "Teaser",
+      "id": "teaser",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Teaser",
+              "model": "teaser",
+              "classes": "view-button"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "teaser",
+      "fields": [
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "View",
+          "valueType": "string",
+          "value": "view-button",
+          "options": [
+            { "name": "Image with button", "value": "view-button" },
+            { "name": "Text box", "value": "view-text-box" },
+            { "name": "Centered text", "value": "view-text-center" }
+          ]
+        },
+        {
+          "component": "boolean",
+          "name": "classes_bcorp",
+          "label": "Show B Corp logo (button view, page metadata bcorp-logo)",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "multiselect",
+          "name": "classes_style",
+          "label": "Style",
+          "valueType": "string",
+          "options": [
+            { "name": "Black & white image", "value": "cmp-teaser--black-white" },
+            { "name": "Theme red", "value": "template-theme--red" },
+            { "name": "Theme purple", "value": "template-theme--purple" },
+            { "name": "Theme green", "value": "template-theme--green" }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Image alt text"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "text",
+          "label": "Content",
+          "description": "Button view: heading, text and one bold/italic link as button. Other views: text only."
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
