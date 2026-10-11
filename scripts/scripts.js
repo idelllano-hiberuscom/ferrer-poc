@@ -11,10 +11,12 @@ import {
   loadCSS,
   getMetadata,
   buildBlock,
+  toClassName,
 } from './aem.js';
 import {
   BREAKPOINTS,
   decorateAuthoredButton,
+  decorateGraffiti,
   getTitleFontClass,
 } from './ferrer-utils.js';
 import { getLanguage } from './ferrer-i18n.js';
@@ -154,13 +156,18 @@ export function decorateButtons(main) {
  * Default content as the AEM title/image components:
  *   - headings get the Ferrer typography class (Boldine by default; DM Sans when the section
  *     has the `title-dm-sans` style, like the graffitiDisabled policy of TitleModel)
+ *   - headings get their graffiti spans (`[[…]]` markers / italics, see decorateGraffiti)
  *   - paragraphs holding only an image get .cmp-image
- * @param {Element} main
+ * Accepts main, a section or a default-content-wrapper (Universal Editor partial updates).
+ * @param {Element} container
  */
-function decorateDefaultContent(main) {
-  main.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
+export function decorateDefaultContent(container) {
+  const wrappers = [...container.querySelectorAll('.default-content-wrapper')];
+  if (container.matches('.default-content-wrapper')) wrappers.push(container);
+  wrappers.forEach((wrapper) => {
     const font = wrapper.closest('.section')?.classList.contains('title-dm-sans') ? 'primary' : 'special-1';
     wrapper.querySelectorAll(':scope > :is(h1, h2, h3, h4, h5, h6)').forEach((heading) => {
+      decorateGraffiti(heading);
       if ([...heading.classList].some((c) => c.startsWith('ferrer-'))) return;
       heading.classList.add(getTitleFontClass(Number(heading.tagName.substring(1)), font));
     });
@@ -168,6 +175,26 @@ function decorateDefaultContent(main) {
       const p = picture.parentElement;
       if (p.textContent.trim() === '') p.classList.add('cmp-image');
     });
+  });
+}
+
+/**
+ * Section anchors (id of the AEM container, e.g. #booth): the section field `anchor`
+ * arrives as data-anchor and becomes the section id, sanitised with toClassName()
+ * ("#Booth M.01" -> "booth-m-01"). Duplicated ids are skipped (first one wins).
+ * @param {Element} main
+ */
+export function decorateSectionAnchors(main) {
+  main.querySelectorAll('.section[data-anchor]').forEach((section) => {
+    const id = toClassName(section.dataset.anchor);
+    if (!id || section.id === id) return;
+    const existing = document.getElementById(id);
+    if (existing && existing !== section) {
+      // eslint-disable-next-line no-console
+      console.warn(`Section anchor "${id}" already in use, skipped`, section);
+      return;
+    }
+    section.id = id;
   });
 }
 
@@ -214,6 +241,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  decorateSectionAnchors(main);
   decorateBlocks(main);
   decorateButtons(main);
   decorateDefaultContent(main);

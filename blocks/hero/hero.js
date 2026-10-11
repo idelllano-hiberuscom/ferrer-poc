@@ -1,7 +1,7 @@
 import { buildBlock, decorateBlock, loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
-  BREAKPOINTS, buildPicture, buildText, buildTitle, decorateAuthoredButton,
+  BREAKPOINTS, buildPicture, buildText, buildTitle, decorateAuthoredButton, wrapLooseText,
 } from '../../scripts/ferrer-utils.js';
 import { t } from '../../scripts/ferrer-i18n.js';
 
@@ -209,7 +209,7 @@ function splitContent(cell) {
     subheading: [], heading: null, text: [], buttons: [],
   };
   if (!cell) return result;
-  const nodes = [...cell.children];
+  const nodes = [...wrapLooseText(cell).children];
   const headingIndex = nodes.findIndex((node) => /^H[1-6]$/.test(node.tagName));
   if (headingIndex >= 0) {
     result.subheading = nodes.slice(0, headingIndex);

@@ -27,7 +27,7 @@
  *           h4 · div.__modal-text · div.__form (2 × .select-dropdown) · div.__actions
  */
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { buildText } from '../../scripts/ferrer-utils.js';
+import { buildText, unwrapRichtext } from '../../scripts/ferrer-utils.js';
 import { buildModal, initModals } from '../../scripts/ferrer-modal.js';
 import { t } from '../../scripts/ferrer-i18n.js';
 
@@ -448,6 +448,8 @@ export default function decorate(block) {
   }
   if (modalCell && modalCell.textContent.trim()) {
     const body = el('div', 'cmp-site-distributor__modal-text');
+    // Universal Editor: without the heading, the modal_body group is the whole cell
+    moveInstrumentation(unwrapRichtext(modalCell), body);
     body.append(...modalCell.childNodes);
     modalText.append(body);
   }

@@ -1,5 +1,6 @@
 import { t, formatMessage } from '../../scripts/ferrer-i18n.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { unwrapRichtext } from '../../scripts/ferrer-utils.js';
 
 /* UE instrumentation: Pendiente (Fase 3) */
 
@@ -65,6 +66,8 @@ function richTextValue(cell) {
  */
 function buildProgram(row) {
   const [tagCell, titleCell, phaseCell] = [...row.children];
+  // Universal Editor: read the title without the richtext group (it would leak its markup)
+  unwrapRichtext(titleCell);
   const tag = tagCell ? tagCell.textContent.trim() : '';
   const title = richTextValue(titleCell);
   const phaseValue = phaseCell ? phaseCell.textContent.trim() : '';
@@ -167,7 +170,7 @@ export default function decorate(block) {
       list.append(item);
       programs.push(data);
     } else if (row.firstElementChild) {
-      moveInstrumentation(row.firstElementChild, footer);
+      moveInstrumentation(unwrapRichtext(row.firstElementChild), footer);
       footer.append(...row.firstElementChild.childNodes);
     }
   });

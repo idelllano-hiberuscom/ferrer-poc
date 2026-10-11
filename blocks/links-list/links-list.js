@@ -19,7 +19,7 @@
  *   div.cmp-modal#links-list-N-modal-I (un modal por enlace a /modals/…)
  */
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { getLinkInfo } from '../../scripts/ferrer-utils.js';
+import { getLinkInfo, unwrapRichtext } from '../../scripts/ferrer-utils.js';
 import { buildModal, initModals } from '../../scripts/ferrer-modal.js';
 
 /* UE instrumentation: Pendiente (Fase 3) */
@@ -49,23 +49,32 @@ function el(tag, className) {
  */
 function moveInline(cell, target) {
   if (!cell) return;
+  unwrapRichtext(cell);
   const blocks = cell.querySelectorAll(':scope > p, :scope > ul, :scope > ol, :scope > div');
   if (blocks.length > 1) {
     target.textContent = cell.textContent.trim();
     return;
   }
   const source = blocks.length === 1 && blocks[0].tagName === 'P' ? blocks[0] : cell;
+  // richtext instrumentation lives on the cell (Universal Editor), text fields on the <p>
+  if (source !== cell) moveInstrumentation(cell, target);
   moveInstrumentation(source, target);
   target.append(...source.childNodes);
 }
 
 /**
  * Moves the rich content (html context) of a cell into `target`.
+ * With `own`, `target` holds only this rich text: the Universal Editor richtext group is
+ * unwrapped and its instrumentation moved to `target`. Otherwise the group (if any) is
+ * moved as is, keeping its own instrumentation.
  * @param {Element} cell
  * @param {Element} target
+ * @param {boolean} [own=false]
  */
-function moveRich(cell, target) {
-  if (cell) target.append(...cell.childNodes);
+function moveRich(cell, target, own = false) {
+  if (!cell) return;
+  if (own) moveInstrumentation(unwrapRichtext(cell), target);
+  target.append(...cell.childNodes);
 }
 
 /**
@@ -151,7 +160,7 @@ function renderWithCard({
   content.append(title);
   if (descriptionCell && descriptionCell.textContent.trim()) {
     const description = el('div', 'cmp-links-list__description');
-    moveRich(descriptionCell, description);
+    moveRich(descriptionCell, description, true);
     content.append(description);
   }
   wrapper.append(content);

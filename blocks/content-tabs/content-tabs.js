@@ -1,4 +1,4 @@
-import { getLinkInfo, BREAKPOINTS } from '../../scripts/ferrer-utils.js';
+import { getLinkInfo, BREAKPOINTS, unwrapRichtext } from '../../scripts/ferrer-utils.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /* UE instrumentation: Pendiente (Fase 3) */
@@ -158,7 +158,7 @@ export default function decorate(block) {
     if (titleCell) moveInstrumentation(titleCell.querySelector('p') || titleCell, heading);
     const text = el('div');
     if (textCell) {
-      moveInstrumentation(textCell, text);
+      moveInstrumentation(unwrapRichtext(textCell), text);
       text.append(...textCell.childNodes);
     }
 

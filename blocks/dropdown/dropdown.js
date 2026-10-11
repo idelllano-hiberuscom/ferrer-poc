@@ -1,4 +1,4 @@
-import { buildText } from '../../scripts/ferrer-utils.js';
+import { buildText, unwrapRichtext, wrapLooseText } from '../../scripts/ferrer-utils.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { buildDownloadDocuments } from '../download-documents/download-documents.js';
 
@@ -62,7 +62,7 @@ function readDocumentGroups(cell) {
       });
     });
   };
-  [...cell.children].forEach((node) => {
+  [...wrapLooseText(cell).children].forEach((node) => {
     if (/^H[1-6]$/.test(node.tagName)) {
       current = { title: node.textContent.trim(), titleNode: node, documents: [] };
       groups.push(current);
@@ -87,7 +87,8 @@ function buildDocumentsPanel(cell, isDark) {
   container.className = 'container container--dropdown-documents';
   const cmpContainer = document.createElement('div');
   cmpContainer.className = 'cmp-container';
-  moveInstrumentation(cell, cmpContainer);
+  // Universal Editor: the richtext group hands its instrumentation to the cell first
+  moveInstrumentation(unwrapRichtext(cell), cmpContainer);
   readDocumentGroups(cell).forEach((group) => {
     const component = document.createElement('div');
     component.className = 'download-documents';

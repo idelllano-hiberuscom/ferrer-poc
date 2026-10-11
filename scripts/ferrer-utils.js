@@ -68,6 +68,110 @@ function moveInstrumentation(from, to) {
 }
 
 /**
+ * Wrapper that editor-support-rte.js#decorateRichtext() puts around the elements of a
+ * richtext field in Universal Editor (author only, never on aem.page/aem.live).
+ */
+const RICHTEXT_GROUP = 'div[data-aue-type="richtext"]';
+
+/**
+ * Whether a node carries no content (whitespace text or comment).
+ * @param {Node} node
+ * @returns {boolean}
+ */
+function isBlankNode(node) {
+  return node.nodeType === Node.COMMENT_NODE
+    || (node.nodeType === Node.TEXT_NODE && !node.textContent.trim());
+}
+
+/**
+ * Removes the data-richtext-* attributes of an element.
+ * @param {Element} element
+ */
+function stripRichtextAttributes(element) {
+  [...element.attributes]
+    .map(({ nodeName }) => nodeName)
+    .filter((attr) => attr.startsWith('data-richtext-'))
+    .forEach((attr) => element.removeAttribute(attr));
+}
+
+/**
+ * Converts the data-richtext-* attributes of `source` into the data-aue-* attributes of
+ * `target`, exactly as decorateRichtext() does on its group element.
+ * @param {Element} source
+ * @param {Element} target
+ */
+function richtextToInstrumentation(source, target) {
+  const {
+    richtextResource, richtextProp, richtextLabel, richtextFilter,
+  } = source.dataset;
+  stripRichtextAttributes(source);
+  if (richtextResource) {
+    target.dataset.aueResource = richtextResource;
+    target.dataset.aueBehavior = 'component';
+  }
+  if (richtextProp) target.dataset.aueProp = richtextProp;
+  if (richtextLabel) target.dataset.aueLabel = richtextLabel;
+  if (richtextFilter) target.dataset.aueFilter = richtextFilter;
+  target.dataset.aueType = 'richtext';
+}
+
+/**
+ * Root element of the rich text of a block cell. In Universal Editor the elements of a
+ * richtext field arrive grouped as `cell > div[data-aue-type="richtext"] > (p|hN|ul…)`
+ * instead of `cell > (p|hN|ul…)`: when that group is the only content of the cell it is
+ * returned, otherwise the cell itself. Read-only, the DOM is not changed.
+ * @param {Element} cell
+ * @returns {Element} the richtext group or the cell
+ */
+export function richtextRoot(cell) {
+  if (!cell || cell.children.length !== 1) return cell;
+  const only = cell.firstElementChild;
+  if (!only.matches(RICHTEXT_GROUP) || only.classList.length) return cell;
+  return [...cell.childNodes].every((node) => node === only || isBlankNode(node)) ? only : cell;
+}
+
+/**
+ * Normalises a richtext cell to the published (aem.page) structure so block code can read
+ * its children by tag: the richtext group of Universal Editor is unwrapped and its
+ * instrumentation (data-aue-*) is moved to the cell, which becomes the richtext root, as the
+ * block then hands the cell instrumentation over to its output with moveInstrumentation().
+ *   - cell > div[data-aue-type=richtext] > nodes    -> cell[data-aue-*] > nodes
+ *   - cell > nodes[data-richtext-*] (not grouped yet) -> cell[data-aue-*] > nodes
+ *   - cell[data-richtext-*] (inline rich text)       -> cell[data-aue-*]
+ * A group sharing the cell with other fields (e.g. text + CTA of a grouped field) is left
+ * untouched: it keeps its own instrumentation and the block treats it as one text node.
+ * No-op outside Universal Editor and idempotent.
+ * @param {Element} cell
+ * @returns {Element} the cell
+ */
+export function unwrapRichtext(cell) {
+  if (!cell || cell.dataset.aueProp) return cell;
+  if (cell.dataset.richtextProp) {
+    richtextToInstrumentation(cell, cell);
+    return cell;
+  }
+  const group = richtextRoot(cell);
+  if (group !== cell) {
+    moveInstrumentation(group, cell);
+    group.before(...group.childNodes);
+    group.remove();
+    return cell;
+  }
+  const parts = [...cell.children];
+  const [first] = parts;
+  const sameField = first && first.dataset.richtextProp
+    && parts.every((part) => part.dataset.richtextProp === first.dataset.richtextProp
+      && part.dataset.richtextResource === first.dataset.richtextResource)
+    && [...cell.childNodes].every((node) => node.nodeType === Node.ELEMENT_NODE
+      || isBlankNode(node));
+  if (sameField) {
+    richtextToInstrumentation(first, cell);
+    parts.slice(1).forEach(stripRichtextAttributes);
+  }
+  return cell;
+}
+
+/**
  * Splits a space separated string or an array into a clean list of class names.
  * @param {string|string[]} classes
  * @returns {string[]}
@@ -133,7 +237,8 @@ export function getLinkInfo(href) {
     isExternal: info.type === 'external',
     isDownload: info.type === 'download',
     isModal: info.type === 'modal',
-    isCurrentPage: sameOrigin && url.pathname === window.location.pathname,
+    // in-page anchors (#booth) point to a section, not to the current page
+    isCurrentPage: sameOrigin && !url.hash && url.pathname === window.location.pathname,
     url,
   };
 }
@@ -438,6 +543,150 @@ export function decorateAuthoredButton(linkOrContainer, {
   return wrap;
 }
 
+/** Elements that are not wrapped by wrapLooseText() (block level, media). */
+const NON_INLINE = /^(ADDRESS|BLOCKQUOTE|DIV|DL|FIGURE|H[1-6]|HR|IMG|OL|P|PICTURE|PRE|TABLE|UL)$/;
+/** Elements that can never live inside a <p>. */
+const BLOCK_LEVEL = /^(ADDRESS|BLOCKQUOTE|DIV|DL|FIGURE|H[1-6]|HR|OL|P|PRE|TABLE|UL)$/;
+
+/**
+ * Rich text of a single paragraph is delivered without its <p> (`<div>text</div>`, or
+ * `<div>text<p class="button-container">…</p></div>` when grouped with a link). Wraps each
+ * run of loose inline content (text nodes, <strong>, <a>, <br>…) holding text in a new <p>,
+ * so block code reading `cell.children` does not drop it. Block children are untouched.
+ * Also repairs the <p>-inside-<p> that aem.js wrapTextNodes() builds for such cells, and
+ * unwraps the richtext group of Universal Editor first (see unwrapRichtext()), so the
+ * returned cell has the same children in author as on aem.page.
+ * @param {Element} cell
+ * @returns {Element} the cell
+ */
+export function wrapLooseText(cell) {
+  if (!cell) return cell;
+  unwrapRichtext(cell);
+  // aem.js wrapTextNodes() wraps the WHOLE cell in a <p> when its first element is inline
+  // (`text<strong>…</strong><p>…</p>` -> <p> holding a <p>): undo it, attributes included
+  const only = cell.children.length === 1 ? cell.firstElementChild : null;
+  if (only && only.tagName === 'P'
+    && [...only.children].some((child) => BLOCK_LEVEL.test(child.tagName))) {
+    [...only.attributes].forEach(({ nodeName, nodeValue }) => {
+      if (nodeName === 'class' || nodeName.startsWith('data-aue') || nodeName.startsWith('data-richtext')) {
+        cell.setAttribute(nodeName, nodeValue);
+      }
+    });
+    only.before(...only.childNodes);
+    only.remove();
+  }
+  let run = [];
+  const flush = () => {
+    if (run.some((node) => node.textContent.trim())) {
+      const p = document.createElement('p');
+      run[0].before(p);
+      p.append(...run);
+    }
+    run = [];
+  };
+  [...cell.childNodes].forEach((node) => {
+    if (node.nodeType === Node.ELEMENT_NODE && NON_INLINE.test(node.tagName)) flush();
+    else if ([Node.TEXT_NODE, Node.ELEMENT_NODE].includes(node.nodeType)) run.push(node);
+  });
+  flush();
+  return cell;
+}
+
+/** Graffiti styles of the title RTE (styles-pulldown of content/title). */
+export const GRAFFITI_VARIANTS = Object.freeze(['gradient', 'blue', 'white']);
+
+/** `[[text]]` / `[[blue:text]]` authoring marker (plain-text title fields). */
+const GRAFFITI_MARKER = /\[\[(?:(gradient|blue|white):)?([^\]]+?)\]\]/g;
+
+/**
+ * Whether the page is rendered inside Universal Editor (author instrumentation present).
+ * @returns {boolean}
+ */
+function isEditorContext() {
+  return !!document.querySelector('[data-aue-resource]');
+}
+
+/**
+ * Creates a hidden authoring marker, kept only in Universal Editor so the inline text
+ * editor reads back the original `[[…]]` value (textContent) instead of losing it.
+ * @param {string} text
+ * @returns {HTMLSpanElement}
+ */
+function graffitiMarker(text) {
+  const marker = document.createElement('span');
+  marker.className = 'graffiti-marker';
+  marker.setAttribute('aria-hidden', 'true');
+  marker.textContent = text;
+  return marker;
+}
+
+/**
+ * Replaces the `[[…]]` markers of one text node with span.graffiti-{variant}.
+ * @param {Text} node
+ * @param {boolean} keepMarkers
+ */
+function graffitiFromMarkers(node, keepMarkers) {
+  const value = node.nodeValue;
+  const matches = [...value.matchAll(GRAFFITI_MARKER)];
+  if (!matches.length) return;
+  const parts = [];
+  let last = 0;
+  matches.forEach((match) => {
+    const [token, variant = 'gradient', text] = match;
+    if (match.index > last) parts.push(document.createTextNode(value.slice(last, match.index)));
+    const span = document.createElement('span');
+    span.className = `graffiti-${variant}`;
+    span.textContent = text;
+    if (keepMarkers) {
+      parts.push(graffitiMarker(token.slice(0, token.length - text.length - 2)), span, graffitiMarker(']]'));
+    } else {
+      parts.push(span);
+    }
+    last = match.index + token.length;
+  });
+  if (last < value.length) parts.push(document.createTextNode(value.slice(last)));
+  node.before(...parts);
+  node.remove();
+}
+
+/**
+ * Graffiti of the title component (TitleModel RTE styles graffiti-gradient|blue|white),
+ * authored in EDS with two conventions:
+ *   - plain-text fields: `FERRER BOOTH [[M.01]]` · `[[blue:M.01]]` · `[[white:M.01]]`
+ *   - rich-text headings: italic (<em>/<i>) = graffiti-gradient
+ * Output: <span class="graffiti-{variant}">…</span>, like the original markup.
+ * In Universal Editor the authored nodes are kept round-trippable: markers stay in hidden
+ * span.graffiti-marker and <em> keeps its node with the graffiti class.
+ * Idempotent: already decorated graffiti is left untouched.
+ * @param {Element} heading
+ * @returns {Element} the heading
+ */
+export function decorateGraffiti(heading) {
+  if (!heading) return heading;
+  const inEditor = isEditorContext();
+
+  heading.querySelectorAll('em, i').forEach((em) => {
+    if (GRAFFITI_VARIANTS.some((v) => em.classList.contains(`graffiti-${v}`))) return;
+    if (inEditor) {
+      em.classList.add('graffiti-gradient');
+      return;
+    }
+    const span = document.createElement('span');
+    span.className = 'graffiti-gradient';
+    em.before(span);
+    span.append(...em.childNodes);
+    em.remove();
+  });
+
+  const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (walker.nextNode()) {
+    if (walker.currentNode.nodeValue.includes('[[')) textNodes.push(walker.currentNode);
+  }
+  textNodes.forEach((node) => graffitiFromMarkers(node, inEditor));
+  return heading;
+}
+
 /**
  * Resolves the typography class of a title (TitleModel.getFont()).
  *   'special-1' (default, Boldine) -> ferrer-h2-special-1
@@ -467,6 +716,7 @@ export function getTitleFontClass(level, font = 'special-1') {
  * @param {Element} [options.element] existing heading (or any element whose children are moved)
  * @param {string} [options.text] plain text content
  * @param {string} [options.html] rich content (TitleModel allows inline markup / graffiti spans)
+ *   Graffiti markers (`[[…]]`, <em>) are converted with decorateGraffiti().
  * @param {number} [options.level=2] heading level for new headings (h1-h6)
  * @param {string} [options.font='special-1'] see getTitleFontClass()
  * @param {string} [options.link] wraps the content in <a class="cmp-title__link">
@@ -498,6 +748,7 @@ export function buildTitle({
     } else if (html) heading.innerHTML = html;
     else heading.textContent = text;
   }
+  decorateGraffiti(heading);
   const headingLevel = Number(heading.tagName.substring(1));
   heading.classList.add(getTitleFontClass(headingLevel, font), ...toClassList(classes));
   if (id) heading.id = id;
@@ -522,7 +773,8 @@ export function buildTitle({
  * Port of content/text/text.html: <div class="cmp-text">rich text</div>.
  * @param {object} options
  * @param {Element|Node[]|NodeList} [options.nodes] existing nodes to move into the wrapper
- *   (an Element moves its child nodes; a list moves the nodes themselves)
+ *   (an Element moves its child nodes, after unwrapRichtext(), and its instrumentation;
+ *   a list moves the nodes themselves)
  * @param {string} [options.html] rich text markup
  * @param {string} [options.text] plain text, rendered as <p class="cmp-text__paragraph">
  * @param {string|string[]} [options.classes] extra classes (e.g. 'ferrer-body-small')
@@ -538,6 +790,7 @@ export function buildText({
   wrap.classList.add('cmp-text', ...toClassList(classes));
   if (nodes) {
     if (nodes instanceof Element) {
+      unwrapRichtext(nodes);
       moveInstrumentation(nodes, wrap);
       wrap.append(...nodes.childNodes);
     } else wrap.append(...nodes);

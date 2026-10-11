@@ -1,5 +1,5 @@
 import {
-  buildTitle, buildText, buildImage, decorateAuthoredButton,
+  buildTitle, buildText, buildImage, decorateAuthoredButton, wrapLooseText,
 } from '../../scripts/ferrer-utils.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -9,6 +9,8 @@ const VIEWS = ['view-1', 'view-2', 'vertical'];
 const DEFAULT_VIEW = 'view-1';
 const POSITIONS = ['left', 'right'];
 const DEFAULT_POSITION = 'left';
+/** Title font of the embedded title component: Boldine (special-1) unless DM Sans is set. */
+const TITLE_DM_SANS = 'title-dm-sans';
 
 /**
  * Creates an element.
@@ -46,7 +48,7 @@ function readContent(block) {
     title: null, titleCell: null, textNodes: [], textCell: null, cta: null, picture: null,
   };
   [...block.children].forEach((row) => {
-    const cell = row.firstElementChild;
+    const cell = wrapLooseText(row.firstElementChild);
     if (!cell) return;
     const children = [...cell.children];
     const picture = cell.querySelector('picture');
@@ -73,15 +75,16 @@ function readContent(block) {
  * The embedded AEM components (data-sly-resource with decorationTagName='div').
  * div.title[.cssClassName] > div.cmp-title > hN
  * @param {object} content
+ * @param {string} font buildTitle() font ('special-1' | 'primary')
  * @param {string} [cssClassName]
  * @returns {HTMLElement|null}
  */
-function titleComponent(content, cssClassName) {
+function titleComponent(content, font, cssClassName) {
   if (!content.title) return null;
   const wrapper = el('div', 'title');
   if (cssClassName) wrapper.classList.add(cssClassName);
   moveInstrumentation(content.titleCell, wrapper);
-  wrapper.append(buildTitle({ element: content.title }));
+  wrapper.append(buildTitle({ element: content.title, font }));
   return wrapper;
 }
 
@@ -143,8 +146,8 @@ function appendAll(parent, nodes) {
  *
  * DOM de entrada (matriz EDS):
  *   block.block-content[.view-1|.view-2|.vertical][.left|.right]
- *                      [.block-content--bottom][.template-theme--*]
- *     ├── div > div → title (<hN>)
+ *                      [.block-content--bottom][.template-theme--*][.title-dm-sans]
+ *     ├── div > div → title (<hN>; graffiti `[[…]]`, see decorateGraffiti)
  *     ├── div > div → text (rich text) + cta (<p><strong|em><a></p>, último párrafo)
  *     └── div > div → image (<picture>, solo view-2)
  *
@@ -153,6 +156,7 @@ function appendAll(parent, nodes) {
 export default function decorate(block) {
   const view = VIEWS.find((v) => block.classList.contains(v)) || DEFAULT_VIEW;
   const position = POSITIONS.find((p) => block.classList.contains(p)) || DEFAULT_POSITION;
+  const font = block.classList.contains(TITLE_DM_SANS) ? 'primary' : 'special-1';
   const content = readContent(block);
 
   const component = el('div', 'cmp-block-content');
@@ -160,7 +164,7 @@ export default function decorate(block) {
   if (view === 'vertical') {
     const vertical = el('div', 'cmp-block-content__vertical');
     appendAll(vertical, [
-      titleComponent(content), textComponent(content), buttonComponent(content),
+      titleComponent(content, font), textComponent(content), buttonComponent(content),
     ]);
     component.append(vertical);
   } else {
@@ -168,12 +172,12 @@ export default function decorate(block) {
     const first = el('div', 'col-12 col-xl-6');
     const second = el('div', `col-12 col-xl-6 cmp-block-content__${view}-text`);
     if (view === 'view-1') {
-      appendAll(first, [titleComponent(content, 'block-content-title')]);
+      appendAll(first, [titleComponent(content, font, 'block-content-title')]);
       appendAll(second, [textComponent(content), buttonComponent(content)]);
     } else {
       appendAll(first, [imageComponent(content, 'cmp-block-content__view-2-image')]);
       appendAll(second, [
-        titleComponent(content), textComponent(content), buttonComponent(content),
+        titleComponent(content, font), textComponent(content), buttonComponent(content),
       ]);
     }
     layout.append(first, second);

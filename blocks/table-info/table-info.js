@@ -1,4 +1,4 @@
-import { getLinkInfo } from '../../scripts/ferrer-utils.js';
+import { getLinkInfo, unwrapRichtext, wrapLooseText } from '../../scripts/ferrer-utils.js';
 import { t } from '../../scripts/ferrer-i18n.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -90,14 +90,18 @@ function buildRow(row) {
   const description = el('p', 'cmp-table-info__description ferrer-body-small');
   let after = [];
   if (detailsCell) {
-    const parts = [...detailsCell.children];
+    const parts = [...wrapLooseText(detailsCell).children];
     if (parts.length > 1) {
       const badgeSource = parts.shift();
       moveInstrumentation(badgeSource, badge);
       badge.textContent = badgeSource.textContent.trim();
       badgeSource.remove();
     }
+    // Universal Editor: without the badge, the description group is the whole cell
+    unwrapRichtext(detailsCell);
     after = fillParagraph(detailsCell, description);
+    // a single paragraph is the whole description: it can keep the inline richtext editor
+    if (!after.length) moveInstrumentation(detailsCell, description);
   }
   detailsCol.append(badge, description, ...after);
 
@@ -170,7 +174,7 @@ export default function decorate(block) {
     footer = el('footer', 'cmp-table-info__footer');
     const disclaimer = el('p', 'cmp-table-info__disclaimer');
     disclaimer.setAttribute('role', 'note');
-    moveInstrumentation(cell, footer);
+    moveInstrumentation(unwrapRichtext(cell), footer);
     const after = fillParagraph(cell, disclaimer, '*');
     footer.append(disclaimer, ...after);
   });

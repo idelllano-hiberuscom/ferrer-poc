@@ -8,7 +8,12 @@ import {
   loadSections,
 } from './aem.js';
 import { decorateRichtext } from './editor-support-rte.js';
-import { decorateButtons, decorateMain } from './scripts.js';
+import {
+  decorateButtons,
+  decorateDefaultContent,
+  decorateMain,
+  decorateSectionAnchors,
+} from './scripts.js';
 
 let promiseChanges$ = Promise.resolve();
 
@@ -79,13 +84,17 @@ async function applyChanges(event) {
           decorateIcons(newSection);
           decorateRichtext(newSection);
           decorateSections(parentElement);
+          decorateDefaultContent(newSection);
           decorateBlocks(parentElement);
           await loadSections(parentElement);
           element.remove();
+          // after removing the old section, which still holds the anchor id
+          decorateSectionAnchors(parentElement);
           newSection.style.display = null;
         } else {
           element.replaceWith(...newElements);
           decorateButtons(parentElement);
+          decorateDefaultContent(parentElement);
           decorateIcons(parentElement);
           decorateRichtext(parentElement);
         }

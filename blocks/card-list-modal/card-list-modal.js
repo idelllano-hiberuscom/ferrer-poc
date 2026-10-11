@@ -10,9 +10,11 @@
  *   div.card-list-modal[.cmp-modal--overlay-disabled][.cmp-modal--blur-enabled]
  *     div (fila = card-list-modal-item)
  *       div > picture          image + imageAlt
- *       div > name
+ *       div > personName       (no `name`: reserved xwalk property, never rendered)
  *       div > position
  *       div > a[href]          modalPath (fragmento /modals/…)
+ *   Rows with fewer than 4 cells (legacy content authored with the old `name` field:
+ *   [image, position, modalPath]) are read by content, see readCells().
  *
  * DOM de salida (1:1 con el HTL):
  *   div
@@ -43,12 +45,36 @@ function moveCellContent(cell, target) {
 }
 
 /**
+ * Maps the cells of one item row to its fields.
+ * 4+ cells: positional [image, personName, position, modalPath]. Fewer cells: by content
+ * (picture → image, link → modalPath, remaining text cells → [personName,] position).
+ * @param {Element[]} cells
+ * @returns {{imageCell: (Element|undefined), nameCell: (Element|undefined),
+ *   positionCell: (Element|undefined), linkCell: (Element|undefined)}}
+ */
+function readCells(cells) {
+  if (cells.length >= 4) {
+    const [imageCell, nameCell, positionCell, linkCell] = cells;
+    return {
+      imageCell, nameCell, positionCell, linkCell,
+    };
+  }
+  const imageCell = cells.find((cell) => cell.querySelector('picture, img'));
+  const linkCell = cells.find((cell) => cell !== imageCell && cell.querySelector('a[href]'));
+  const texts = cells.filter((cell) => cell !== imageCell && cell !== linkCell);
+  const [nameCell, positionCell] = texts.length >= 2 ? texts : [undefined, texts[0]];
+  return {
+    imageCell, nameCell, positionCell, linkCell,
+  };
+}
+
+/**
  * Builds the card-managers trigger of one item.
- * @param {Element[]} cells [image, name, position]
+ * @param {object} fields readCells() result
  * @param {string} id modal id
  * @returns {HTMLDivElement}
  */
-function buildCard([imageCell, nameCell, positionCell], id) {
+function buildCard({ imageCell, nameCell, positionCell }, id) {
   const card = document.createElement('div');
   card.className = 'card-managers js-open-modal';
   card.dataset.modalId = id;
@@ -109,17 +135,17 @@ export default function decorate(block) {
   const modals = [];
 
   [...block.children].forEach((row, index) => {
-    const cells = [...row.children];
+    const fields = readCells([...row.children]);
     const id = `${prefix}-${index + 1}`;
 
     const item = document.createElement('li');
     item.className = 'cmp-card-list-modal__item';
     item.dataset.modalId = id;
     moveInstrumentation(row, item);
-    item.append(buildCard(cells, id));
+    item.append(buildCard(fields, id));
     list.append(item);
 
-    const link = cells[3] && cells[3].querySelector('a');
+    const link = fields.linkCell && fields.linkCell.querySelector('a[href]');
     modals.push(buildModal({
       id,
       path: link ? link.getAttribute('href') : '',

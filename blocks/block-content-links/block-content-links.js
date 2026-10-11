@@ -1,6 +1,6 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
-  buildImage, buildText, buildTitle, decorateAuthoredButton, getLinkInfo,
+  buildImage, buildText, buildTitle, decorateAuthoredButton, getLinkInfo, unwrapRichtext,
 } from '../../scripts/ferrer-utils.js';
 import { formatMessage, t } from '../../scripts/ferrer-i18n.js';
 import { buildControls, createCarousel } from '../../scripts/ferrer-carousel.js';
@@ -41,7 +41,7 @@ function decorationDiv(className, component) {
  */
 function moveText(cell, target) {
   if (!cell) return target;
-  moveInstrumentation(cell, target);
+  moveInstrumentation(unwrapRichtext(cell), target);
   const only = cell.children.length === 1 && cell.firstElementChild.tagName === 'P'
     ? cell.firstElementChild : null;
   if (only) moveInstrumentation(only, target);
@@ -75,8 +75,10 @@ function buildCta(row, wrapperClass) {
 function buildContentChildren(row) {
   const cell = row?.firstElementChild;
   if (!cell?.textContent.trim()) return [];
-  const heading = cell.querySelector(':scope > :is(h1, h2, h3, h4, h5, h6)');
+  const heading = unwrapRichtext(cell).querySelector(':scope > :is(h1, h2, h3, h4, h5, h6)');
   const title = heading ? decorationDiv('title', buildTitle({ element: heading })) : null;
+  // Universal Editor: once the title is out, the content_text group is the whole cell
+  unwrapRichtext(cell);
   const rest = [...cell.childNodes].filter((node) => node !== heading
     && (node.nodeType === Node.ELEMENT_NODE || node.textContent.trim()));
   const text = rest.length ? decorationDiv('text', buildText({ nodes: rest })) : null;
@@ -99,6 +101,7 @@ function buildCard(row) {
   const title = moveText(titleCell, el('h3', 'card-basic__header-title ferrer-h5'));
   header.append(title);
   // rich text: a single paragraph keeps the original <p>; block content needs a <div>
+  unwrapRichtext(textCell);
   const blocks = textCell ? [...textCell.children].filter((c) => /^(P|UL|OL|H\d|DIV)$/.test(c.tagName)) : [];
   const description = moveText(textCell, el(blocks.length > 1 ? 'div' : 'p', 'card-basic__content-description'));
   content.append(header, description);
