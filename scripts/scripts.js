@@ -237,12 +237,32 @@ function decorateSectionBackgrounds(main) {
  * @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
+/**
+ * The AEM style-system modifiers authored in a block `classes` field keep their BEM form
+ * in author (`links-menu--dark`), but the aem.page/aem.live pipeline normalises block
+ * classes with toClassName() and collapses `--` into `-` (`links-menu-dark`). Restores the
+ * original modifier next to the collapsed one, so block CSS and JS match in both cases.
+ * @param {Element} main
+ */
+export function restoreBemModifiers(main) {
+  main.querySelectorAll('div.block[data-block-name]').forEach((block) => {
+    const name = block.dataset.blockName;
+    const prefixes = [name, `cmp-${name}`, 'cmp-modal', 'template-theme'];
+    [...block.classList].forEach((cls) => {
+      if (cls === name || cls.includes('--')) return;
+      const prefix = prefixes.find((p) => cls.startsWith(`${p}-`) && cls.length > p.length + 1);
+      if (prefix) block.classList.add(`${prefix}--${cls.slice(prefix.length + 1)}`);
+    });
+  });
+}
+
 export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
   decorateSectionAnchors(main);
   decorateBlocks(main);
+  restoreBemModifiers(main);
   decorateButtons(main);
   decorateDefaultContent(main);
   decorateSectionBackgrounds(main);
